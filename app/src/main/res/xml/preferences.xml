@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditTextPreference
+            android:key="username"
+            android:title="@string/username_pref_title"
+            android:summary="@string/username_pref_summary"
+            android:dialogTitle="@string/username_pref_dialog" />
+
+    <ListPreference
+            android:key="color_theme"
+            android:title="@string/color_pref_title"
+            android:dialogTitle="@string/color_pref_title" />
+
+    <EditTextPreference
+            android:key="months"
+            android:title="@string/months_pref_title" />
+
+    <CheckBoxPreference
+            android:key="transparency"
+            android:title="@string/transparency_pref_title"
+            android:defaultValue="true" />
+
+</PreferenceScreen>
