@@ -6,8 +6,15 @@
                  android:icon="@drawable/ic_launcher"
                  android:theme="@style/AppTheme">
 
+        <receiver android:name=".Widget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.APPWIDGET_ENABLED" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider" android:resource="@xml/widget" />
+        </receiver>
 
-        <activity android:name=".WidgetPreferencesActivity" android:exported="false">
+        <activity android:name=".WidgetPreferenceActivity" android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

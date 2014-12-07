@@ -12,7 +12,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
 
-public class WidgetPreferencesActivity extends PreferenceActivity {
+public class WidgetPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "GHCW";
     private static final String CONFIGURE_ACTION = "android.appwidget.action.APPWIDGET_CONFIGURE";
 
