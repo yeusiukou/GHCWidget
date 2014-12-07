@@ -4,7 +4,7 @@
              android:layout_height="fill_parent"
              android:background="@drawable/widget_shape">
     <TextView
-            android:id="@+id/textView"
+            android:id="@+id/widgetTextView"
             android:layout_width="fill_parent"
             android:text="Test"
             android:layout_height="wrap_content"
