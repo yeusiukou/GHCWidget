@@ -3,11 +3,18 @@
              android:layout_width="fill_parent"
              android:layout_height="fill_parent"
              android:background="@drawable/widget_shape">
-    <TextView
-            android:id="@+id/widgetTextView"
+    <ImageView
             android:layout_width="fill_parent"
-            android:text="Test"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textColor="#FFFFFF"/>
+            android:layout_marginLeft="7dp"
+            android:layout_marginRight="6dp"
+            android:id="@+id/commitsView"
+            android:layout_gravity="center_horizontal|top"/>
+
+    <!--<TextView-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Small Text"-->
+            <!--android:id="@+id/myTextView" android:layout_gravity="left|top"/>-->
 </FrameLayout>

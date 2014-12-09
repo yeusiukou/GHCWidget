@@ -11,6 +11,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 public class WidgetPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "GHCW";
@@ -79,5 +80,11 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
                 Uri.EMPTY, this, Widget.class);
 
         sendBroadcast(updateWidget);
+    }
+
+
+    public void alert (String msg)
+    {
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 }
