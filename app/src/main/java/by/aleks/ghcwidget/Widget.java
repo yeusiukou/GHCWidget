@@ -7,6 +7,7 @@ package by.aleks.ghcwidget;
         import android.content.Context;
         import android.content.Intent;
         import android.graphics.*;
+        import android.util.Log;
         import android.view.Display;
         import android.view.WindowManager;
         import android.widget.RemoteViews;
@@ -19,6 +20,8 @@ package by.aleks.ghcwidget;
 
 public class Widget extends AppWidgetProvider {
 
+    private static final String debugTag = "GHCWiget";
+
     private RemoteViews remoteViews;
 
     @Override
@@ -27,6 +30,7 @@ public class Widget extends AppWidgetProvider {
 
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
         //remoteViews.setTextViewText(R.id.myTextView, loadData());
+        Log.d(debugTag, "Processing started!");
         remoteViews.setImageViewBitmap(R.id.commitsView, processImage(context));
         setClickIntent(context);
     }
@@ -81,7 +85,7 @@ public class Widget extends AppWidgetProvider {
 
         float side = size.x/weeksNumber * (1-SPACE_RATIO);
         float space = size.x/weeksNumber - side;
-        float textSize = side*0.8f;
+        float textSize = side*0.87f;
 
         int height = (int)(7*(side+space)+textSize+TEXT_GRAPH_SPACE);
 
@@ -92,7 +96,7 @@ public class Widget extends AppWidgetProvider {
         paint.setStyle(Paint.Style.FILL);
 
         Paint paintText = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintText.setStyle(Paint.Style.FILL);
+        paintText.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.NORMAL));
         paintText.setTextSize(textSize);
         paintText.setColor(Color.GRAY);
 
