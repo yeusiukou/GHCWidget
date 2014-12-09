@@ -5,13 +5,19 @@ package by.aleks.ghcwidget;
  */
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
+import by.aleks.ghcwidget.data.ColorTheme;
+
+import java.util.Set;
 
 public class WidgetPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "GHCW";
@@ -23,7 +29,11 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
-        //Set up the Listener to change the colour when updated.
+        ListPreference themePref = (ListPreference)findPreference("color_theme");
+        themePref.setEntries(ColorTheme.getThemeNames());
+        themePref.setEntryValues(ColorTheme.getThemeNames());
+
+        //Set up the Listener.
         findPreference("username").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("color_theme").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("months").setOnPreferenceChangeListener(onPreferenceChange);

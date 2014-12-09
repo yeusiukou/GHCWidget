@@ -8,4 +8,6 @@
     <string name="color_pref_title">Color theme</string>
     <string name="months_pref_title">Number of months to display</string>
     <string name="transparency_pref_title">Transparency</string>
+
+    <string name="loading_error">Loading failed</string>
 </resources>

@@ -2,19 +2,30 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="fill_parent"
              android:layout_height="fill_parent"
-             android:background="@drawable/widget_shape">
-    <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="7dp"
-            android:layout_marginRight="6dp"
-            android:id="@+id/commitsView"
-            android:layout_gravity="center_horizontal|top"/>
+             android:id="@+id/widget"
+             android:alpha="0.79">
 
-    <!--<TextView-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-            <!--android:text="Small Text"-->
-            <!--android:id="@+id/myTextView" android:layout_gravity="left|top"/>-->
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/widget_shape"
+            android:layout_gravity="center_horizontal|top">
+
+        <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="6dp"
+                android:id="@+id/commitsView"
+                android:layout_gravity="center_horizontal|top"/>
+
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Loading..."
+                android:id="@+id/loadingText"
+                android:layout_gravity="center_horizontal|bottom"/>
+    </RelativeLayout>
+
 </FrameLayout>

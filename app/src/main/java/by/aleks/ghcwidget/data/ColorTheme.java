@@ -2,34 +2,34 @@ package by.aleks.ghcwidget.data;
 
 import android.graphics.Color;
 
+import java.util.HashMap;
+
 /**
  * Created by Alex on 12/8/14.
  */
 public class ColorTheme {
 
-    public static enum ThemeName {
-        GITHUB("GitHub"), MODERN("Modern");
+    public static String GITHUB = "GitHub";
+    public static String MODERN = "Modern";
 
-        private String friendlyName;
 
-        private ThemeName(String friendlyName){
-            this.friendlyName = friendlyName;
-        }
+    private String[] standard = {"#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
+    private String[] modern = {"#afaca8", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
 
-        @Override public String toString() {
-            return friendlyName;
-        }
+    private HashMap<String, String[]> themeMap;
+
+    public ColorTheme(){
+        themeMap = new HashMap<>();
+        themeMap.put(ColorTheme.GITHUB, standard);
+        themeMap.put(ColorTheme.MODERN, modern);
     }
 
-    private static String[] standard = {"#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
-    private static String[] modern = {"#9babb9", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
+    public int getColor(String themeName, int level){
+        return Color.parseColor(themeMap.get(themeName)[level]);
+    }
 
-    public static int getColor(ThemeName themeName, int level){
-        switch(themeName){
-            case GITHUB: return Color.parseColor(standard[level]);
-            case MODERN: return Color.parseColor(modern[level]);
-        }
-        throw new IllegalArgumentException("Can't find the given theme");
+    public static CharSequence[] getThemeNames(){
+        return new CharSequence[]{ColorTheme.GITHUB, ColorTheme.MODERN};
     }
 
 }

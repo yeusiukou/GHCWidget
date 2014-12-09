@@ -6,7 +6,9 @@ package by.aleks.ghcwidget;
         import android.content.ComponentName;
         import android.content.Context;
         import android.content.Intent;
+        import android.content.SharedPreferences;
         import android.graphics.*;
+        import android.preference.PreferenceManager;
         import android.util.Log;
         import android.view.Display;
         import android.view.WindowManager;
@@ -20,48 +22,95 @@ package by.aleks.ghcwidget;
 
 public class Widget extends AppWidgetProvider {
 
-    private static final String debugTag = "GHCWiget";
-
+    private static final String debugTag = "GHCWidget";
     private RemoteViews remoteViews;
+
+    //Parameters
+    private String username;
+    private int months;
+    private String theme;
+
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
 
+        setPreferences(context);
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
-        //remoteViews.setTextViewText(R.id.myTextView, loadData());
-        Log.d(debugTag, "Processing started!");
-        remoteViews.setImageViewBitmap(R.id.commitsView, processImage(context));
-        setClickIntent(context);
+
+        Bitmap bitmap = processImage(context);
+        if(bitmap!=null){
+            remoteViews.setTextViewText(R.id.loadingText, "");
+            remoteViews.setImageViewBitmap(R.id.commitsView, bitmap);
+        }
+        else remoteViews.setTextViewText(R.id.loadingText, context.getResources().getString(R.string.loading_error));
+
+
+        for (int appWidgetId : appWidgetIds){
+            setClickIntent(context, appWidgetId);
+        }
+
+        super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        final String action = intent.getAction();
 
-    private void setClickIntent(Context context) {
+        if (action != null) {
+            if (action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE) ||
+                    action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
 
-        // When we click the widget, we want to open our main activity.
+                AppWidgetManager appWM = AppWidgetManager.getInstance(context);
+
+                //Update the Widget.
+                if (appWM != null) {
+                    onUpdate(context, appWM, appWM.getAppWidgetIds(intent.getComponent()));
+                }
+            }
+
+            super.onReceive(context, intent);
+        }
+    }
+
+    private void setPreferences(Context context){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        username = prefs.getString("username", "xRoker");
+        months = Integer.parseInt(prefs.getString("months", "5"));
+        theme = prefs.getString("color_theme", ColorTheme.GITHUB);
+        Log.d(debugTag, "Preferences updated: "+username+" "+months+" "+theme);
+
+    }
+
+    //On click open the preferences activity
+    private void setClickIntent(Context context, int appWidgetId) {
+
         Intent launchActivity = new Intent(context, WidgetPreferenceActivity.class);
+        launchActivity.setAction("android.appwidget.action.APPWIDGET_CONFIGURE");
+        launchActivity.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, launchActivity, 0);
 
-        remoteViews.setOnClickPendingIntent(R.id.commitsView, pendingIntent);
+        remoteViews.setOnClickPendingIntent(R.id.widget, pendingIntent);
 
         ComponentName thisWidget = new ComponentName(context, Widget.class);
         AppWidgetManager manager = AppWidgetManager.getInstance(context);
         manager.updateAppWidget(thisWidget, remoteViews);
+
     }
 
 
     private Bitmap processImage(Context context){
-        CommitsBase base = loadData();
+        CommitsBase base = loadData(username);
         Point size = getScreenSize(context);
-        return createBitmap(base, 21, size, ColorTheme.ThemeName.MODERN);
+        int weeks = 4*months+1;
+        return createBitmap(base, weeks, size, theme);
     }
 
 
-    private CommitsBase loadData(){
+    private CommitsBase loadData(String username){
         GitHubAPITask task = new GitHubAPITask();
 
         try {
-            return task.execute("xRoker").get();
+            return task.execute(username).get();
         }
         catch (Exception e)
         {
@@ -79,7 +128,7 @@ public class Widget extends AppWidgetProvider {
     }
 
 
-    private Bitmap createBitmap(CommitsBase base, int weeksNumber, Point size, ColorTheme.ThemeName theme){
+    private Bitmap createBitmap(CommitsBase base, int weeksNumber, Point size, String theme){
         float SPACE_RATIO = 0.1f;
         int TEXT_GRAPH_SPACE = 7;
 
@@ -88,6 +137,8 @@ public class Widget extends AppWidgetProvider {
         float textSize = side*0.87f;
 
         int height = (int)(7*(side+space)+textSize+TEXT_GRAPH_SPACE);
+
+        ColorTheme colorTheme = new ColorTheme();
 
         Bitmap bitmap = Bitmap.createBitmap(size.x, height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
@@ -108,7 +159,7 @@ public class Widget extends AppWidgetProvider {
                     canvas.drawText(weeks.get(i).get(1).getMonth(), x, textSize, paintText);
                 }
                 for (Day day : weeks.get(i)){
-                    paint.setColor(ColorTheme.getColor(theme, day.getLevel()));
+                    paint.setColor(colorTheme.getColor(theme, day.getLevel()));
                     canvas.drawRect(x, y, x+side, y+side, paint);
                     y = y + side + space;
                 }

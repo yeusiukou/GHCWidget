@@ -53,12 +53,10 @@ public class GitHubAPITask extends AsyncTask<String, Integer, CommitsBase> // Us
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 switch (eventType) {
                     case XmlPullParser.START_DOCUMENT: {
-                        System.out.println("Parsing has begun!");
                         break;
                     }
                     case XmlPullParser.START_TAG: {
                         if (xpp.getName().equals("g")) {
-                            System.out.println("Tag - " + xpp.getName());
                             if (!firstTagSkipped) {
                                 firstTagSkipped = true;
                                 eventType = xpp.next();
