@@ -10,4 +10,6 @@
     <string name="transparency_pref_title">Transparency</string>
 
     <string name="loading_error">Loading failed</string>
+    <string name="day">day</string>
+    <string name="days">days</string>
 </resources>

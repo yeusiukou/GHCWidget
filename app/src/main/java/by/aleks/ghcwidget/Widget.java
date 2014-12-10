@@ -97,9 +97,18 @@ public class Widget extends AppWidgetProvider {
 
     }
 
+    private void updateInfoBar(CommitsBase base){
+        remoteViews.setTextViewText(R.id.sumContrView, base.commitsNumber()+" total");
+        int streak = base.currentStreak();
+        if(streak == 1){
+            remoteViews.setTextViewText(R.id.streakView, streak+" day");
+        } else remoteViews.setTextViewText(R.id.streakView, streak+" days");
+    }
+
 
     private Bitmap processImage(Context context){
         CommitsBase base = loadData(username);
+        updateInfoBar(base);
         Point size = getScreenSize(context);
         int weeks = 4*months+1;
         return createBitmap(base, weeks, size, theme);
