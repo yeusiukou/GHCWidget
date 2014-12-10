@@ -32,12 +32,12 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         ListPreference themePref = (ListPreference)findPreference("color_theme");
         themePref.setEntries(ColorTheme.getThemeNames());
         themePref.setEntryValues(ColorTheme.getThemeNames());
+        themePref.setDefaultValue(ColorTheme.GITHUB);
 
         //Set up the Listener.
         findPreference("username").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("color_theme").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("months").setOnPreferenceChangeListener(onPreferenceChange);
-        findPreference("transparency").setOnPreferenceChangeListener(onPreferenceChange);
     }
 
     /**

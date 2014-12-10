@@ -75,7 +75,13 @@ public class Widget extends AppWidgetProvider {
     private void setPreferences(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         username = prefs.getString("username", "xRoker");
-        months = Integer.parseInt(prefs.getString("months", "5"));
+        try{
+            months = Integer.parseInt(prefs.getString("months", "5"));
+            if(months>12 || months<1)
+                months = 12;
+        } catch (Exception e){
+            months = 5;
+        }
         theme = prefs.getString("color_theme", ColorTheme.GITHUB);
         Log.d(debugTag, "Preferences updated: "+username+" "+months+" "+theme);
 
@@ -108,6 +114,8 @@ public class Widget extends AppWidgetProvider {
 
     private Bitmap processImage(Context context){
         CommitsBase base = loadData(username);
+        if(base==null)
+            return null;
         updateInfoBar(base);
         Point size = getScreenSize(context);
         int weeks = 4*months+1;

@@ -16,9 +16,4 @@
             android:key="months"
             android:title="@string/months_pref_title" />
 
-    <CheckBoxPreference
-            android:key="transparency"
-            android:title="@string/transparency_pref_title"
-            android:defaultValue="true" />
-
 </PreferenceScreen>
