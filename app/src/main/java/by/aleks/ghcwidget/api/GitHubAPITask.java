@@ -31,6 +31,9 @@ public class GitHubAPITask extends AsyncTask<String, Integer, CommitsBase> // Us
             e.getMessage();
             return null;
         }
+        if(result.equals(""))
+            return null;
+
         CommitsBase base = parseResult(result);
         return base;
     }

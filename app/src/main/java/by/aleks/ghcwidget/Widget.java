@@ -8,6 +8,9 @@ package by.aleks.ghcwidget;
         import android.content.Intent;
         import android.content.SharedPreferences;
         import android.graphics.*;
+        import android.net.ConnectivityManager;
+        import android.net.NetworkInfo;
+        import android.net.wifi.WifiManager;
         import android.preference.PreferenceManager;
         import android.util.Log;
         import android.view.Display;
@@ -23,7 +26,9 @@ package by.aleks.ghcwidget;
 public class Widget extends AppWidgetProvider {
 
     private static final String debugTag = "GHCWidget";
+    private boolean connectionFlag;
     private RemoteViews remoteViews;
+    private static CommitsBase base;
 
     //Parameters
     private String username;
@@ -37,12 +42,11 @@ public class Widget extends AppWidgetProvider {
         setPreferences(context);
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
 
-        Bitmap bitmap = processImage(context);
-        if(bitmap!=null){
-            remoteViews.setTextViewText(R.id.loadingText, "");
-            remoteViews.setImageViewBitmap(R.id.commitsView, bitmap);
-        }
-        else remoteViews.setTextViewText(R.id.loadingText, context.getResources().getString(R.string.loading_error));
+        remoteViews.setImageViewBitmap(R.id.commitsView, processImage(context));
+
+        if(!connectionFlag)
+            remoteViews.setTextViewText(R.id.loadingText, context.getResources().getString(R.string.loading_error));
+        else remoteViews.setTextViewText(R.id.loadingText, "");
 
 
         for (int appWidgetId : appWidgetIds){
@@ -111,27 +115,34 @@ public class Widget extends AppWidgetProvider {
         } else remoteViews.setTextViewText(R.id.streakView, streak+" days");
     }
 
-
+    // Load data from GitHub and generate a bitmap with commits.
     private Bitmap processImage(Context context){
-        CommitsBase base = loadData(username);
-        if(base==null)
-            return null;
-        updateInfoBar(base);
+        CommitsBase refreshedBase = loadData(username);
+
+        if (refreshedBase != null){
+            base = refreshedBase;
+            updateInfoBar(base);
+        }
+
         Point size = getScreenSize(context);
         int weeks = 4*months+1;
         return createBitmap(base, weeks, size, theme);
     }
 
 
+    //Load data from the api using AsyncTask.
     private CommitsBase loadData(String username){
         GitHubAPITask task = new GitHubAPITask();
 
         try {
-            return task.execute(username).get();
+            CommitsBase refreshedBase = task.execute(username).get();
+            connectionFlag = (refreshedBase!=null);
+            return refreshedBase;
         }
         catch (Exception e)
         {
             task.cancel(true);
+            connectionFlag = false;
             return null;
         }
     }
