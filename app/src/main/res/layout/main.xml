@@ -14,21 +14,10 @@
         <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="4dp"
                 android:id="@+id/commitsView"
                 android:layout_gravity="center_horizontal|top"/>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Loading..."
-                android:layout_margin="30dp"
-                android:fontFamily="sans-serif-thin"
-                android:textColor="@color/background_material_dark"
-                android:id="@+id/loadingText"
-                android:layout_gravity="center_horizontal|bottom"/>
 
         <ImageView
                 android:layout_width="35dp"
@@ -44,7 +33,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:id="@+id/sumContrView"
+                android:id="@+id/leftView"
                 android:layout_margin="7dp"
                 android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/octocatView"
                 android:layout_toEndOf="@+id/octocatView"/>
@@ -54,7 +43,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:id="@+id/streakView"
+                android:text="Loading..."
+                android:id="@+id/rightView"
                 android:layout_marginBottom="7dp"
                 android:layout_marginRight="17dp"
                 android:layout_alignParentRight="true"

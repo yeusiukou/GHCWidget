@@ -51,7 +51,6 @@ public class Widget extends AppWidgetProvider {
                 break;
             case STATUS_NOTFOUND: printMessage(context.getResources().getString(R.string.not_found));
                 break;
-            default: printMessage("");
         }
 
 
@@ -114,11 +113,11 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void updateInfoBar(CommitsBase base){
-        remoteViews.setTextViewText(R.id.sumContrView, base.commitsNumber()+" total");
+        remoteViews.setTextViewText(R.id.leftView, base.commitsNumber()+" total");
         int streak = base.currentStreak();
         if(streak == 1){
-            remoteViews.setTextViewText(R.id.streakView, streak+" day");
-        } else remoteViews.setTextViewText(R.id.streakView, streak+" days");
+            remoteViews.setTextViewText(R.id.rightView, streak+" day");
+        } else remoteViews.setTextViewText(R.id.rightView, streak+" days");
     }
 
     // Load data from GitHub and generate a bitmap with commits.
@@ -205,7 +204,8 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void printMessage(String msg){
-        remoteViews.setTextViewText(R.id.loadingText, msg);
+        remoteViews.setTextViewText(R.id.leftView, "");
+        remoteViews.setTextViewText(R.id.rightView, msg);
     }
 
     public void setStatus(int status){
