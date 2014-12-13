@@ -12,6 +12,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         findPreference("username").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("color_theme").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("months").setOnPreferenceChangeListener(onPreferenceChange);
+        findPreference("start_on_monday").setOnPreferenceChangeListener(onPreferenceChange);
     }
 
     /**

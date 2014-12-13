@@ -15,5 +15,8 @@
     <EditTextPreference
             android:key="months"
             android:title="@string/months_pref_title" />
+    <CheckBoxPreference
+            android:key="start_on_monday"
+            android:title="Start week on Monday"/>
 
 </PreferenceScreen>

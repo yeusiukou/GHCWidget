@@ -35,6 +35,7 @@ public class Widget extends AppWidgetProvider {
     private String username;
     private int months;
     private String theme;
+    private boolean startOnMonday;
 
 
     @Override
@@ -92,6 +93,7 @@ public class Widget extends AppWidgetProvider {
             months = 5;
         }
         theme = prefs.getString("color_theme", ColorTheme.GITHUB);
+        startOnMonday = prefs.getBoolean("start_on_monday", false);
         Log.d(debugTag, "Preferences updated: "+username+" "+months+" "+theme);
 
     }
@@ -199,8 +201,19 @@ public class Widget extends AppWidgetProvider {
 
                     if (firstWeek==-1 && day.isFirst())
                         firstWeek = i;
+                    if(startOnMonday && weeks.get(i).indexOf(day)==0)
+                        continue;
 
                     paint.setColor(colorTheme.getColor(theme, day.getLevel()));
+                    canvas.drawRect(x, y, x+side, y+side, paint);
+                    y = y + side + space;
+                }
+                if(startOnMonday){
+                    try {
+                        paint.setColor(colorTheme.getColor(theme, weeks.get(i + 1).get(0).getLevel()));
+                    } catch (IndexOutOfBoundsException e) {
+                        break;
+                    }
                     canvas.drawRect(x, y, x+side, y+side, paint);
                     y = y + side + space;
                 }
