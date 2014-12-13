@@ -56,8 +56,7 @@ public class GitHubHelper {
             StatusLine status = response.getStatusLine();
             if (status.getStatusCode() != HTTP_STATUS_OK) {
                 // handle error here
-                throw new ApiException("Invalid response from GitHub" +
-                        status.toString());
+                return "invalid_response";
             }
 
             // process the content.

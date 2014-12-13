@@ -8,9 +8,6 @@ package by.aleks.ghcwidget;
         import android.content.Intent;
         import android.content.SharedPreferences;
         import android.graphics.*;
-        import android.net.ConnectivityManager;
-        import android.net.NetworkInfo;
-        import android.net.wifi.WifiManager;
         import android.preference.PreferenceManager;
         import android.util.Log;
         import android.view.Display;
@@ -25,10 +22,14 @@ package by.aleks.ghcwidget;
 
 public class Widget extends AppWidgetProvider {
 
+    public static final int STATUS_OFFLINE = 0;
+    public static final int STATUS_NOTFOUND = 1;
+    public static final int STATUS_ONLINE = 2;
+
     private static final String debugTag = "GHCWidget";
-    private boolean connectionFlag;
     private RemoteViews remoteViews;
-    private static CommitsBase base;
+    private CommitsBase base;
+    private int status = STATUS_ONLINE;
 
     //Parameters
     private String username;
@@ -41,12 +42,17 @@ public class Widget extends AppWidgetProvider {
 
         setPreferences(context);
         remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+        Bitmap bitmap = processImage(context);
+        if(bitmap!=null)
+            remoteViews.setImageViewBitmap(R.id.commitsView, bitmap);
 
-        remoteViews.setImageViewBitmap(R.id.commitsView, processImage(context));
-
-        if(!connectionFlag)
-            remoteViews.setTextViewText(R.id.loadingText, context.getResources().getString(R.string.loading_error));
-        else remoteViews.setTextViewText(R.id.loadingText, "");
+        switch (status){
+            case STATUS_OFFLINE: printMessage(context.getResources().getString(R.string.loading_error));
+                break;
+            case STATUS_NOTFOUND: printMessage(context.getResources().getString(R.string.not_found));
+                break;
+            default: printMessage("");
+        }
 
 
         for (int appWidgetId : appWidgetIds){
@@ -122,7 +128,7 @@ public class Widget extends AppWidgetProvider {
         if (refreshedBase != null){
             base = refreshedBase;
             updateInfoBar(base);
-        }
+        } else return null;
 
         Point size = getScreenSize(context);
         int weeks = 4*months+1;
@@ -132,17 +138,16 @@ public class Widget extends AppWidgetProvider {
 
     //Load data from the api using AsyncTask.
     private CommitsBase loadData(String username){
-        GitHubAPITask task = new GitHubAPITask();
+        GitHubAPITask task = new GitHubAPITask(this);
 
         try {
+            status = STATUS_ONLINE;
             CommitsBase refreshedBase = task.execute(username).get();
-            connectionFlag = (refreshedBase!=null);
             return refreshedBase;
         }
         catch (Exception e)
         {
             task.cancel(true);
-            connectionFlag = false;
             return null;
         }
     }
@@ -197,6 +202,14 @@ public class Widget extends AppWidgetProvider {
         }
 
         return bitmap;
+    }
+
+    private void printMessage(String msg){
+        remoteViews.setTextViewText(R.id.loadingText, msg);
+    }
+
+    public void setStatus(int status){
+        this.status = status;
     }
 
 }
