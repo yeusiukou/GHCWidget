@@ -186,11 +186,20 @@ public class Widget extends AppWidgetProvider {
         if(base!=null){
             float x=0, y=textSize+TEXT_GRAPH_SPACE;
             ArrayList<ArrayList<Day>> weeks = base.getWeeks();
+
+            int firstWeek = -1; //Number of the week above which there will be the first month name.
+
             for(int i = weeks.size() - weeksNumber; i<weeks.size(); i++){
-                if(i%4 == 0 && i!=weeks.size()-1){
+
+                // Set the position and draw a month name.
+                if(firstWeek!=-1 && (i+firstWeek)%4 == 0 && i!=weeks.size()-1){
                     canvas.drawText(weeks.get(i).get(1).getMonth(), x, textSize, paintText);
                 }
                 for (Day day : weeks.get(i)){
+
+                    if (firstWeek==-1 && day.isFirst())
+                        firstWeek = i;
+
                     paint.setColor(colorTheme.getColor(theme, day.getLevel()));
                     canvas.drawRect(x, y, x+side, y+side, paint);
                     y = y + side + space;
