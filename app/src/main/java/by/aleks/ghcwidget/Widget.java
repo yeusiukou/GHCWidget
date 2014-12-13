@@ -36,6 +36,7 @@ public class Widget extends AppWidgetProvider {
     private int months;
     private String theme;
     private boolean startOnMonday;
+    private boolean showDaysLabel;
 
 
     @Override
@@ -94,6 +95,7 @@ public class Widget extends AppWidgetProvider {
         }
         theme = prefs.getString("color_theme", ColorTheme.GITHUB);
         startOnMonday = prefs.getBoolean("start_on_monday", false);
+        showDaysLabel = prefs.getBoolean("days_labels", true);
         Log.d(debugTag, "Preferences updated: "+username+" "+months+" "+theme);
 
     }
@@ -166,8 +168,11 @@ public class Widget extends AppWidgetProvider {
         float SPACE_RATIO = 0.1f;
         int TEXT_GRAPH_SPACE = 7;
 
-        float side = size.x/weeksNumber * (1-SPACE_RATIO);
-        float space = size.x/weeksNumber - side;
+        float daysLabelSpaceRatio = showDaysLabel ? 0.8f : 0;
+
+
+        float side = size.x/(weeksNumber+daysLabelSpaceRatio) * (1-SPACE_RATIO);
+        float space = size.x/(weeksNumber+daysLabelSpaceRatio) - side;
         float textSize = side*0.87f;
 
         int height = (int)(7*(side+space)+textSize+TEXT_GRAPH_SPACE);
@@ -186,7 +191,22 @@ public class Widget extends AppWidgetProvider {
         paintText.setColor(Color.GRAY);
 
         if(base!=null){
-            float x=0, y=textSize+TEXT_GRAPH_SPACE;
+            float x = 0, y;
+
+            // Draw days labels.
+            if(showDaysLabel){
+                y = startOnMonday ? textSize*2+TEXT_GRAPH_SPACE : textSize*2+TEXT_GRAPH_SPACE+side;
+                canvas.drawText("M", 0, y, paintText);
+                canvas.drawText("W", 0, y+2*(side+space), paintText);
+                canvas.drawText("F", textSize*0.1f, y+4*(side+space), paintText);
+                if(startOnMonday)
+                    canvas.drawText("S", textSize*0.1f, y+6*(side+space), paintText);
+
+                x = textSize;
+            }
+
+            y = textSize+TEXT_GRAPH_SPACE;
+
             ArrayList<ArrayList<Day>> weeks = base.getWeeks();
 
             int firstWeek = -1; //Number of the week above which there will be the first month name.

@@ -40,6 +40,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         findPreference("color_theme").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("months").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("start_on_monday").setOnPreferenceChangeListener(onPreferenceChange);
+        findPreference("days_labels").setOnPreferenceChangeListener(onPreferenceChange);
     }
 
     /**
