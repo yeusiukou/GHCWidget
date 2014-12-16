@@ -53,6 +53,10 @@ public class Day {
         return new SimpleDateFormat("MMM").format(calendar.getTime());
     }
 
+    public String getDate(){
+        return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
+    }
+
     public boolean isFirst(){
         //return firstDayInMonth;
         return calendar.get(Calendar.DAY_OF_MONTH)==1;

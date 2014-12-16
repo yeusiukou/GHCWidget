@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Alex on 12/8/14.
  */
-public class CommitsBase {
+public class CommitsBase implements Base{
 
     private ArrayList<Day> days = new ArrayList<>();
     private ArrayList< ArrayList<Day> > weeks = new ArrayList<>();
