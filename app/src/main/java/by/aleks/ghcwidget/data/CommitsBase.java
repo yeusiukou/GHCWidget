@@ -59,6 +59,20 @@ public class CommitsBase {
         return streakCounter;
     }
 
+    /** Returns a very first week in a month from the given range*/
+    public int getFirstWeekOfMonth(int weeksNum){
+        int firstWeekOfLast = -1;
+        for(int i = weeks.size()-1; i > 0; i--){
+            for(Day day : weeks.get(i)){
+                if(day.isFirst()){
+                    firstWeekOfLast = weeks.size()-1 - i;
+                    break;
+                }
+            }
+        }
+        return firstWeekOfLast%4;
+    }
+
     public ArrayList< ArrayList<Day> > getWeeks(){
         return weeks;
     }

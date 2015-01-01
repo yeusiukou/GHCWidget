@@ -209,19 +209,17 @@ public class Widget extends AppWidgetProvider {
 
             ArrayList<ArrayList<Day>> weeks = base.getWeeks();
 
-            int firstWeek = -1; //Number of the week above which there will be the first month name.
+            int firstWeek = base.getFirstWeekOfMonth(weeksNumber); //Number of the week above which there will be the first month name.
 
             for(int i = weeks.size() - weeksNumber; i<weeks.size(); i++){
 
                 // Set the position and draw a month name.
-                if(firstWeek!=-1 && (i+firstWeek)%4 == 0 && i!=weeks.size()-1){
+                if( (firstWeek!=-1 && (i-weeks.size()+firstWeek)%4 == 0 && i!=weeks.size()-1) || firstWeek==i){
                     canvas.drawText(weeks.get(i).get(1).getMonthName(), x, textSize, paintText);
                 }
 
                 for (Day day : weeks.get(i)){
 
-                    if (firstWeek==-1 && day.isFirst())
-                        firstWeek = i;
                     if(startOnMonday && weeks.get(i).indexOf(day)==0)
                         continue;
 
