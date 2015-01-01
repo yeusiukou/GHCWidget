@@ -215,7 +215,7 @@ public class Widget extends AppWidgetProvider {
 
                 // Set the position and draw a month name.
                 if(firstWeek!=-1 && (i+firstWeek)%4 == 0 && i!=weeks.size()-1){
-                    canvas.drawText(weeks.get(i).get(1).getMonth(), x, textSize, paintText);
+                    canvas.drawText(weeks.get(i).get(1).getMonthName(), x, textSize, paintText);
                 }
 
                 for (Day day : weeks.get(i)){

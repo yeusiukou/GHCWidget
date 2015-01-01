@@ -10,12 +10,24 @@ public class CommitsBase {
     private ArrayList<Day> days = new ArrayList<>();
     private ArrayList< ArrayList<Day> > weeks = new ArrayList<>();
     private int currentWeek = -1;
+    private Day currentDay;
 
     public void addDay(Day day){
         if (days == null)
             days = new ArrayList<Day>();
 
+        // Decline the current week in the case it was created because od a new year.
+        if (currentDay!=null && day.getYear() > currentDay.getYear()){
+            if(weeks.get(currentWeek-1).size()<7){
+                weeks.remove(currentWeek);
+                currentWeek--;
+            }
+            //Skip the previous year days after a new year.
+        } else if (currentDay!=null && day.getYear() < currentDay.getYear())
+            return;
+
         weeks.get(currentWeek).add(day);
+        currentDay = day;
     }
 
     public void newWeek(){

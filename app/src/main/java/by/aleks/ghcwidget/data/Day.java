@@ -49,9 +49,10 @@ public class Day {
         this.commitsNumber = commitsNumber;
     }
 
-    public String getMonth(){
+    public String getMonthName(){
         return new SimpleDateFormat("MMM").format(calendar.getTime());
     }
+    public int getYear(){ return Integer.parseInt(new SimpleDateFormat("yyyy").format(calendar.getTime())); }
 
     public boolean isFirst(){
         //return firstDayInMonth;
