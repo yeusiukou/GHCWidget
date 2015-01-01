@@ -20,7 +20,7 @@
             android:title="Start week on Monday"/>
     <CheckBoxPreference
             android:key="days_labels"
-            android:title="Show the days of the week labels"
+            android:title="Show days of week"
             android:defaultValue="true"/>
 
 </PreferenceScreen>
