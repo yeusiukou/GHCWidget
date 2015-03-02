@@ -3,7 +3,7 @@
                     android:minWidth="250dp"
                     android:minHeight="110dp"
                     android:initialLayout="@layout/main"
-                    android:widgetCategory="home_screen|keyguard"
+                    android:widgetCategory="home_screen"
                     android:updatePeriodMillis="1800000"
                     android:previewImage="@drawable/preview"
-                    android:resizeMode="horizontal|vertical"/>
+                    android:resizeMode="0"/>
