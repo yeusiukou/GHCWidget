@@ -14,6 +14,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 import by.aleks.ghcwidget.data.ColorTheme;
@@ -49,8 +50,18 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
     private OnPreferenceChangeListener onPreferenceChange = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-            Intent activityIntent = getIntent();
 
+            String key = preference.getKey();
+
+            // Exit if the username is invalid
+            if(preference.getKey().equals("username")){
+                if(!isUsernameValid((String)newValue)){
+                    alert("Invalid username");
+                    return false;
+                }
+            }
+
+            Intent activityIntent = getIntent();
             if (CONFIGURE_ACTION.equals(activityIntent.getAction())) {
                 Bundle extras = activityIntent.getExtras();
 
@@ -93,6 +104,10 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
                 Uri.EMPTY, this, Widget.class);
 
         sendBroadcast(updateWidget);
+    }
+
+    private boolean isUsernameValid(String value){
+        return value.matches("[a-zA-Z0-9-]+");
     }
 
 
