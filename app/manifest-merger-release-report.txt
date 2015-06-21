@@ -1,0 +1,73 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:1:1
+	package
+		ADDED from AndroidManifest.xml:2:11
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:1:11
+	android:versionCode
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+application
+ADDED from AndroidManifest.xml:4:5
+MERGED from com.android.support:appcompat-v7:21.0.2:16:5
+MERGED from com.android.support:support-v4:21.0.2:16:5
+	android:label
+		ADDED from AndroidManifest.xml:5:18
+	android:allowBackup
+		ADDED from AndroidManifest.xml:4:18
+	android:icon
+		ADDED from AndroidManifest.xml:6:18
+	android:theme
+		ADDED from AndroidManifest.xml:7:18
+receiver#by.aleks.ghcwidget.Widget
+ADDED from AndroidManifest.xml:9:9
+	android:name
+		ADDED from AndroidManifest.xml:9:19
+intent-filter#android.appwidget.action.APPWIDGET_ENABLED+android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:10:13
+action#android.appwidget.action.APPWIDGET_UPDATE
+ADDED from AndroidManifest.xml:11:17
+	android:name
+		ADDED from AndroidManifest.xml:11:25
+action#android.appwidget.action.APPWIDGET_ENABLED
+ADDED from AndroidManifest.xml:12:17
+	android:name
+		ADDED from AndroidManifest.xml:12:25
+meta-data#android.appwidget.provider
+ADDED from AndroidManifest.xml:14:13
+	android:resource
+		ADDED from AndroidManifest.xml:14:66
+	android:name
+		ADDED from AndroidManifest.xml:14:24
+activity#by.aleks.ghcwidget.WidgetPreferenceActivity
+ADDED from AndroidManifest.xml:17:9
+	android:exported
+		ADDED from AndroidManifest.xml:17:60
+	android:name
+		ADDED from AndroidManifest.xml:17:19
+intent-filter#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from AndroidManifest.xml:18:13
+action#android.appwidget.action.APPWIDGET_CONFIGURE
+ADDED from AndroidManifest.xml:19:17
+	android:name
+		ADDED from AndroidManifest.xml:19:25
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:24:5
+	android:name
+		ADDED from AndroidManifest.xml:24:22
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:appcompat-v7:21.0.2:15:5
+MERGED from com.android.support:support-v4:21.0.2:15:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
