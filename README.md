@@ -4,7 +4,10 @@ GitHub Contributions Widget
 ### Description
 This simple widget shows your contribution activity over a chosen amount of time. It has a few different color themes to better fit your homescreen style.
 
-<a href="https://play.google.com/store/apps/details?id=by.aleks.ghcwidget"><img src="http://www.mymagic106.com/upload/button-get-it-on-google-play.png" width="250" height="74" ></a>
+<a href="https://play.google.com/store/apps/details?id=by.aleks.ghcwidget">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+</a>
 
 ### Screenshots
 
