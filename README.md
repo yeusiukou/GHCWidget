@@ -12,9 +12,9 @@ This simple widget shows your contribution activity over a chosen amount of time
 ### Screenshots
 
 <div id="pics" style=display:inline>
-<img src="https://lh5.ggpht.com/GNIOcJ1qYu-NqMkRKcjtDSiFbLANNexYiNgwr6g3MNHpvXDAWF0zTw1OfGHIwV4HqZw=h310-rw">
-<img src="https://lh3.ggpht.com/ZAqymbBxdNz4r8xi0yi96ayWSB2kfjydme7MGBor4LZqC6b13F5MmKYnumo2emfPepC7=h310-rw">
-<img src="https://lh6.ggpht.com/naXtsES5gxj6r-l9cFRB9fuwxctzBKV06uHdZFX6TrUTr7GcV46rBaTYOKl6uGklDOU=h310-rw">
+<img src="https://lh5.ggpht.com/GNIOcJ1qYu-NqMkRKcjtDSiFbLANNexYiNgwr6g3MNHpvXDAWF0zTw1OfGHIwV4HqZw=h310">
+<img src="https://lh3.ggpht.com/ZAqymbBxdNz4r8xi0yi96ayWSB2kfjydme7MGBor4LZqC6b13F5MmKYnumo2emfPepC7=h310">
+<img src="https://lh6.ggpht.com/naXtsES5gxj6r-l9cFRB9fuwxctzBKV06uHdZFX6TrUTr7GcV46rBaTYOKl6uGklDOU=h310">
 </div>
 
 ### License
