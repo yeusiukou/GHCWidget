@@ -8,6 +8,7 @@ package by.aleks.ghcwidget;
         import android.content.Intent;
         import android.content.SharedPreferences;
         import android.graphics.*;
+        import android.os.Bundle;
         import android.preference.PreferenceManager;
         import android.util.Log;
         import android.view.Display;
@@ -26,10 +27,11 @@ public class Widget extends AppWidgetProvider {
     public static final int STATUS_NOTFOUND = 1;
     public static final int STATUS_ONLINE = 2;
 
-    private static final String debugTag = "GHCWidget";
+    private static final String TAG = "GHCWidget";
     private RemoteViews remoteViews;
     private CommitsBase base;
     private int status = STATUS_ONLINE;
+    private int[] appWidgetIds;
 
     //Parameters
     private String username;
@@ -41,25 +43,9 @@ public class Widget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-
-        setPreferences(context);
-        remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
-        Bitmap bitmap = processImage(context);
-        if(bitmap!=null)
-            remoteViews.setImageViewBitmap(R.id.commitsView, bitmap);
-
-        switch (status){
-            case STATUS_OFFLINE: printMessage(context.getResources().getString(R.string.loading_error));
-                break;
-            case STATUS_NOTFOUND: printMessage(context.getResources().getString(R.string.not_found));
-                break;
-        }
-
-
-        for (int appWidgetId : appWidgetIds){
-            setClickIntent(context, appWidgetId);
-        }
-
+        if(this.appWidgetIds==null)
+            this.appWidgetIds = appWidgetIds;
+        updateWidget(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
@@ -72,16 +58,97 @@ public class Widget extends AppWidgetProvider {
                     action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
 
                 AppWidgetManager appWM = AppWidgetManager.getInstance(context);
+                if(this.appWidgetIds==null)
+                    this.appWidgetIds = appWM.getAppWidgetIds(intent.getComponent());
 
-                //Update the Widget.
-                if (appWM != null) {
-                    onUpdate(context, appWM, appWM.getAppWidgetIds(intent.getComponent()));
-                }
+                updateWidget(context);
             }
 
             super.onReceive(context, intent);
         }
     }
+
+    @Override
+    public void onAppWidgetOptionsChanged(Context context,
+                                          AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
+
+        Log.d(TAG, "Changed dimensions");
+        // See the dimensions and
+        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
+
+        // Get min width and height.
+        int minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int minHeight = options
+                .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+
+        // Obtain appropriate widget and update it.
+        remoteViews = getRemoteViews(context, minWidth, minHeight);
+        updateWidget(context);
+        setClickIntent(context, appWidgetId);
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
+                newOptions);
+    }
+
+    /**
+     * Determine appropriate view based on width provided.
+     *
+     * @param minWidth
+     * @param minHeight
+     * @return
+     */
+    private RemoteViews getRemoteViews(Context context, int minWidth,
+                                       int minHeight) {
+        // First find out rows and columns based on width provided.
+        int rows = getCellsForSize(minHeight);
+        int columns = getCellsForSize(minWidth);
+
+        if (columns > 2) {
+            // Get 4 column widget remote view and return
+            return new RemoteViews(context.getPackageName(),
+                    R.layout.main);
+        } else {
+            // Get appropriate remote view.
+            return new RemoteViews(context.getPackageName(),
+                    R.layout.small);
+        }
+    }
+
+    /**
+     * Returns number of cells needed for given size of the widget.
+     *
+     * @param size Widget size in dp.
+     * @return Size in number of cells.
+     */
+    private static int getCellsForSize(int size) {
+        int n = 2;
+        while (70 * n - 30 < size) {
+            ++n;
+        }
+        return n - 1;
+    }
+
+    private void updateWidget(Context context){
+        if(remoteViews==null)
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+        setPreferences(context);
+        Bitmap bitmap = processImage(context);
+        if(bitmap!=null)
+            remoteViews.setImageViewBitmap(R.id.commitsView, bitmap);
+
+        switch (status){
+            case STATUS_OFFLINE: printMessage(context.getResources().getString(R.string.loading_error));
+                break;
+            case STATUS_NOTFOUND: printMessage(context.getResources().getString(R.string.not_found));
+                break;
+        }
+
+        if(appWidgetIds != null){
+            for (int appWidgetId : appWidgetIds){
+                setClickIntent(context, appWidgetId);
+            }
+        }
+    }
+
 
     private void setPreferences(Context context){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -96,7 +163,7 @@ public class Widget extends AppWidgetProvider {
         theme = prefs.getString("color_theme", ColorTheme.GITHUB);
         startOnMonday = prefs.getBoolean("start_on_monday", false);
         showDaysLabel = prefs.getBoolean("days_labels", true);
-        Log.d(debugTag, "Preferences updated: "+username+" "+months+" "+theme);
+        Log.d(TAG, "Preferences updated: "+username+" "+months+" "+theme);
 
     }
 

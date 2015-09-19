@@ -15,17 +15,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
-                android:minHeight="70dp"
-                android:layout_margin="7dp"
+                android:minHeight="60dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:id="@+id/commitsView"
                 android:layout_gravity="center_horizontal|top"/>
 
         <ImageView
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
                 android:id="@+id/octocatView"
                 android:background="@drawable/octocat"
-                android:layout_marginLeft="7dp"
+                android:layout_margin="7dp"
                 android:layout_below="@+id/commitsView" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
         <TextView
@@ -36,21 +37,24 @@
                 android:textColor="@color/background_material_dark"
                 android:id="@+id/leftView"
                 android:text="86 total"
-                android:layout_margin="7dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginRight="7dp"
                 android:layout_below="@+id/commitsView"
-                android:layout_toRightOf="@+id/octocatView" android:layout_toEndOf="@+id/octocatView"/>
+                android:layout_toRightOf="@+id/octocatView" android:layout_toEndOf="@+id/octocatView"
+                android:textSize="16dp"/>
+
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
                 android:text="Loading..."
                 android:id="@+id/rightView"
-                android:layout_margin="7dp"
-                android:layout_below="@+id/commitsView" android:layout_alignRight="@+id/commitsView"
-                android:layout_alignEnd="@+id/commitsView"/>
+                android:textSize="13dp"
+                android:layout_below="@+id/leftView" android:layout_alignLeft="@+id/leftView"
+                android:layout_alignStart="@+id/leftView"/>
     </RelativeLayout>
 
 </FrameLayout>
