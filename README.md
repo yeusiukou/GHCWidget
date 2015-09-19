@@ -4,14 +4,17 @@ GitHub Contributions Widget
 ### Description
 This simple widget shows your contribution activity over a chosen amount of time. It has a few different color themes to better fit your homescreen style.
 
-<a href="https://play.google.com/store/apps/details?id=by.aleks.ghcwidget"><img src="http://www.mymagic106.com/upload/button-get-it-on-google-play.png" width="250" height="74" ></a>
+<a href="https://play.google.com/store/apps/details?id=by.aleks.ghcwidget">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+</a>
 
 ### Screenshots
 
 <div id="pics" style=display:inline>
-<img src="https://lh5.ggpht.com/GNIOcJ1qYu-NqMkRKcjtDSiFbLANNexYiNgwr6g3MNHpvXDAWF0zTw1OfGHIwV4HqZw=h310-rw">
-<img src="https://lh3.ggpht.com/ZAqymbBxdNz4r8xi0yi96ayWSB2kfjydme7MGBor4LZqC6b13F5MmKYnumo2emfPepC7=h310-rw">
-<img src="https://lh6.ggpht.com/naXtsES5gxj6r-l9cFRB9fuwxctzBKV06uHdZFX6TrUTr7GcV46rBaTYOKl6uGklDOU=h310-rw">
+<img src="https://lh5.ggpht.com/GNIOcJ1qYu-NqMkRKcjtDSiFbLANNexYiNgwr6g3MNHpvXDAWF0zTw1OfGHIwV4HqZw=h310">
+<img src="https://lh3.ggpht.com/ZAqymbBxdNz4r8xi0yi96ayWSB2kfjydme7MGBor4LZqC6b13F5MmKYnumo2emfPepC7=h310">
+<img src="https://lh6.ggpht.com/naXtsES5gxj6r-l9cFRB9fuwxctzBKV06uHdZFX6TrUTr7GcV46rBaTYOKl6uGklDOU=h310">
 </div>
 
 ### License
