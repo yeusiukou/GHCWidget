@@ -101,7 +101,7 @@ public class Widget extends AppWidgetProvider {
         // First find out rows and columns based on width provided.
         int rows = getCellsForSize(minHeight);
         int columns = getCellsForSize(minWidth);
-
+        adjustMonthsNum(context, columns);
         if (columns > 2) {
             // Get 4 column widget remote view and return
             return new RemoteViews(context.getPackageName(),
@@ -163,7 +163,7 @@ public class Widget extends AppWidgetProvider {
         theme = prefs.getString("color_theme", ColorTheme.GITHUB);
         startOnMonday = prefs.getBoolean("start_on_monday", false);
         showDaysLabel = prefs.getBoolean("days_labels", true);
-        Log.d(TAG, "Preferences updated: "+username+" "+months+" "+theme);
+        Log.d(TAG, "Preferences updated: " + username + " " + months + " " + theme);
 
     }
 
@@ -184,7 +184,7 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void updateInfoBar(CommitsBase base){
-        remoteViews.setTextViewText(R.id.leftView, base.commitsNumber()+" total");
+        remoteViews.setTextViewText(R.id.leftView, base.commitsNumber() + " total");
         int streak = base.currentStreak();
         if(streak == 1){
             remoteViews.setTextViewText(R.id.rightView, streak+" day");
@@ -309,6 +309,21 @@ public class Widget extends AppWidgetProvider {
         }
 
         return bitmap;
+    }
+
+    private void adjustMonthsNum(Context context, int numColumns){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = prefs.edit();
+        switch (numColumns){
+            case 2: editor.putString("months", "2");
+                break;
+            case 3: editor.putString("months", "4");
+                break;
+            case 4: editor.putString("months", "5");
+                break;
+            default: editor.putString("months", "5");
+        }
+        editor.commit();
     }
 
     private void printMessage(String msg){
