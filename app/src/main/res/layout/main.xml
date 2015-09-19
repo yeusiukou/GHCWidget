@@ -7,13 +7,14 @@
 
     <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:background="@drawable/widget_shape"
             android:layout_gravity="center_horizontal|top">
 
         <ImageView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="60dp"
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
                 android:id="@+id/commitsView"
@@ -24,9 +25,9 @@
                 android:layout_height="35dp"
                 android:id="@+id/octocatView"
                 android:background="@drawable/octocat"
-                android:layout_margin="7dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true"/>
+                android:layout_marginLeft="7dp"
+                android:layout_below="@+id/commitsView" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,9 +35,11 @@
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
                 android:id="@+id/leftView"
+                android:text="86 total"
                 android:layout_margin="7dp"
-                android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/octocatView"
-                android:layout_toEndOf="@+id/octocatView"/>
+                android:layout_marginTop="0dp"
+                android:layout_below="@+id/commitsView"
+                android:layout_toRightOf="@+id/octocatView" android:layout_toEndOf="@+id/octocatView"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,10 +48,9 @@
                 android:textColor="@color/background_material_dark"
                 android:text="Loading..."
                 android:id="@+id/rightView"
-                android:layout_marginBottom="7dp"
-                android:layout_marginRight="17dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"/>
+                android:layout_margin="7dp"
+                android:layout_below="@+id/commitsView" android:layout_alignRight="@+id/commitsView"
+                android:layout_alignEnd="@+id/commitsView"/>
     </RelativeLayout>
 
 </FrameLayout>
