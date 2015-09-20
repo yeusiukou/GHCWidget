@@ -60,7 +60,7 @@ public class Widget extends AppWidgetProvider {
             if (action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE) ||
                     action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
 
-                online = intent.getBooleanExtra(LOAD_DATA_KEY, true);
+                online = intent.getBooleanExtra(LOAD_DATA_KEY, true); //Set the flag of online/caching mode
                 AppWidgetManager appWM = AppWidgetManager.getInstance(context);
                 if(this.appWidgetIds==null)
                     this.appWidgetIds = appWM.getAppWidgetIds(intent.getComponent());
@@ -96,7 +96,7 @@ public class Widget extends AppWidgetProvider {
         int rows = getCellsForSize(minHeight);
         int columns = getCellsForSize(minWidth);
         if(resized){
-            adjustMonthsNum(context, columns);
+            adjustMonthsNum(context, columns, rows);
             resized = false;
         }
         if (columns > 2) {
@@ -331,17 +331,29 @@ public class Widget extends AppWidgetProvider {
         return bitmap;
     }
 
-    private void adjustMonthsNum(Context context, int numColumns){
+    private void adjustMonthsNum(Context context, int numColumns, int numRows){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
-        switch (numColumns){
-            case 2: editor.putString("months", "2");
-                break;
-            case 3: editor.putString("months", "4");
-                break;
-            case 4: editor.putString("months", "5");
-                break;
-            default: editor.putString("months", "5");
+        if(numRows > 1){
+            switch (numColumns){
+                case 2: editor.putString("months", "2");
+                    break;
+                case 3: editor.putString("months", "4");
+                    break;
+                case 4: editor.putString("months", "5");
+                    break;
+                default: editor.putString("months", "5");
+            }
+        } else {
+            switch (numColumns){
+                case 2: editor.putString("months", "4");
+                    break;
+                case 3: editor.putString("months", "6");
+                    break;
+                case 4: editor.putString("months", "8");
+                    break;
+                default: editor.putString("months", "8");
+            }
         }
         editor.commit();
     }
