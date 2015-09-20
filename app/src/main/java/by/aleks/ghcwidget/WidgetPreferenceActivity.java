@@ -74,10 +74,9 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
                     result.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
 
                     setResult(RESULT_OK, result);
-
+                    Log.d(TAG, preference.getTitle().toString());
                     //Update the widget.
-                    if(!preference.getTitle().equals("username"))
-                        UpdateWidget(false);
+                    UpdateWidget(preference.getKey().equals("username"));
 
                     finish();
                 }

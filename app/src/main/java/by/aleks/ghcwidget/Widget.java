@@ -34,6 +34,7 @@ public class Widget extends AppWidgetProvider {
     private int[] appWidgetIds;
     private boolean resized = false;
     private boolean online;
+    private Context context;
     public static final String LOAD_DATA_KEY = "load_data";
 
     //Parameters
@@ -76,7 +77,6 @@ public class Widget extends AppWidgetProvider {
     public void onAppWidgetOptionsChanged(Context context,
                                           AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
 
-        Log.d(TAG, "Changed dimensions");
         resized = true;
         updateWidget(context);
         setClickIntent(context, appWidgetId);
@@ -123,6 +123,9 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void updateWidget(Context context){
+
+        if(this.context == null)
+            this.context = context;
 
         AppWidgetManager mgr = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = mgr.getAppWidgetIds(new ComponentName(context, Widget.class));
@@ -192,21 +195,24 @@ public class Widget extends AppWidgetProvider {
 
     private void updateInfoBar(CommitsBase base){
         remoteViews.setTextViewText(R.id.total, String.valueOf(base.commitsNumber()));
+        remoteViews.setTextViewText(R.id.totalTextView, context.getString(R.string.total));
         int streak = base.currentStreak();
         remoteViews.setTextViewText(R.id.days, String.valueOf(streak));
         if(streak == 1){
-            remoteViews.setTextViewText(R.id.daysTextView, "day");
-        } else remoteViews.setTextViewText(R.id.daysTextView, "days");
+            remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.day));
+        } else remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.days));
     }
 
     // Load data from GitHub and generate a bitmap with commits.
     private Bitmap processImage(Context context){
-        CommitsBase refreshedBase = loadData(context, username);
 
-        if (refreshedBase != null){
-            base = refreshedBase;
-            updateInfoBar(base);
-        } else return null;
+        if(base == null || online){
+            CommitsBase refreshedBase = loadData(context, username);
+            if (refreshedBase != null){
+                base = refreshedBase;
+                updateInfoBar(base);
+            } else return null;
+        }
 
         Point size = getScreenSize(context);
         int weeks = 4*months+1;
@@ -282,11 +288,11 @@ public class Widget extends AppWidgetProvider {
             // Draw days labels.
             if(showDaysLabel){
                 y = startOnMonday ? textSize*2+TEXT_GRAPH_SPACE : textSize*2+TEXT_GRAPH_SPACE+side;
-                canvas.drawText("M", 0, y, paintText);
-                canvas.drawText("W", 0, y+2*(side+space), paintText);
-                canvas.drawText("F", textSize*0.1f, y+4*(side+space), paintText);
+                canvas.drawText(context.getString(R.string.m), 0, y, paintText);
+                canvas.drawText(context.getString(R.string.w), 0, y+2*(side+space), paintText);
+                canvas.drawText(context.getString(R.string.f), textSize*0.1f, y+4*(side+space), paintText);
                 if(startOnMonday)
-                    canvas.drawText("S", textSize*0.1f, y+6*(side+space), paintText);
+                    canvas.drawText(context.getString(R.string.s), textSize*0.1f, y+6*(side+space), paintText);
 
                 x = textSize;
             }
@@ -369,7 +375,9 @@ public class Widget extends AppWidgetProvider {
 
     private void printMessage(String msg){
         remoteViews.setTextViewText(R.id.total, "");
-        remoteViews.setTextViewText(R.id.days, msg);
+        remoteViews.setTextViewText(R.id.totalTextView, "");
+        remoteViews.setTextViewText(R.id.days, "");
+        remoteViews.setTextViewText(R.id.daysTextView, msg);
     }
 
     public void setStatus(int status){

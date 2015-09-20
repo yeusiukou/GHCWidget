@@ -103,6 +103,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                 } catch (Exception e) {
                     Log.d(debugTag, "Error in parsing");
                     e.printStackTrace();
+                    return null;
                 }
                 return base;
             }

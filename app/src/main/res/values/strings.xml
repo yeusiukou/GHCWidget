@@ -13,4 +13,9 @@
     <string name="not_found">Username not found</string>
     <string name="day">day</string>
     <string name="days">days</string>
+    <string name="total">total</string>
+    <string name="m">M</string>
+    <string name="w">W</string>
+    <string name="f">F</string>
+    <string name="s">S</string>
 </resources>

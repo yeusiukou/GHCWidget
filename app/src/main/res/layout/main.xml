@@ -36,7 +36,6 @@
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
                 android:id="@+id/total"
-                android:text="86"
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="7dp"
                 android:layout_below="@+id/commitsView"
@@ -47,7 +46,8 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:text=" total"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/totalTextView"
                 android:layout_alignTop="@+id/total" android:layout_toRightOf="@+id/total"
                 android:layout_toEndOf="@+id/total"/>
 
@@ -57,7 +57,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:text=""
                 android:id="@+id/days"
                 android:layout_alignTop="@+id/daysTextView" android:layout_toLeftOf="@+id/daysTextView"
                 android:layout_toStartOf="@+id/daysTextView"/>
