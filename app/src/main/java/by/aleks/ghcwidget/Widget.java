@@ -73,20 +73,10 @@ public class Widget extends AppWidgetProvider {
                                           AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
 
         Log.d(TAG, "Changed dimensions");
-        // See the dimensions and
-        Bundle options = appWidgetManager.getAppWidgetOptions(appWidgetId);
 
-        // Get min width and height.
-        int minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-        int minHeight = options
-                .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-
-        // Obtain appropriate widget and update it.
-        remoteViews = getRemoteViews(context, minWidth, minHeight);
         updateWidget(context);
         setClickIntent(context, appWidgetId);
-        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId,
-                newOptions);
+        super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
     }
 
     /**
@@ -128,8 +118,20 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void updateWidget(Context context){
-        if(remoteViews==null)
-            remoteViews = new RemoteViews(context.getPackageName(), R.layout.main);
+
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds = mgr.getAppWidgetIds(new ComponentName(context, Widget.class));
+        // See the dimensions and
+        Bundle options = mgr.getAppWidgetOptions(appWidgetIds[0]);
+
+        // Get min width and height.
+        int minWidth = options.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+        int minHeight = options
+                .getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
+
+        // Obtain appropriate widget and update it.
+        remoteViews = getRemoteViews(context, minWidth, minHeight);
+
         setPreferences(context);
         Bitmap bitmap = processImage(context);
         if(bitmap!=null)
