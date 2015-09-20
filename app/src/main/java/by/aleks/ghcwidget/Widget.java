@@ -32,6 +32,7 @@ public class Widget extends AppWidgetProvider {
     private CommitsBase base;
     private int status = STATUS_ONLINE;
     private int[] appWidgetIds;
+    private boolean resized = false;
 
     //Parameters
     private String username;
@@ -73,7 +74,7 @@ public class Widget extends AppWidgetProvider {
                                           AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions) {
 
         Log.d(TAG, "Changed dimensions");
-
+        resized = true;
         updateWidget(context);
         setClickIntent(context, appWidgetId);
         super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
@@ -91,7 +92,10 @@ public class Widget extends AppWidgetProvider {
         // First find out rows and columns based on width provided.
         int rows = getCellsForSize(minHeight);
         int columns = getCellsForSize(minWidth);
-        adjustMonthsNum(context, columns);
+        if(resized){
+            adjustMonthsNum(context, columns);
+            resized = false;
+        }
         if (columns > 2) {
             // Get 4 column widget remote view and return
             return new RemoteViews(context.getPackageName(),
