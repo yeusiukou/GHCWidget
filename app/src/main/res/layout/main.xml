@@ -35,10 +35,10 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:id="@+id/leftView"
-                android:text="86 total"
-                android:layout_margin="7dp"
-                android:layout_marginTop="0dp"
+                android:id="@+id/total"
+                android:text="86"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="7dp"
                 android:layout_below="@+id/commitsView"
                 android:layout_toRightOf="@+id/octocatView" android:layout_toEndOf="@+id/octocatView"/>
         <TextView
@@ -47,9 +47,31 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
+                android:text=" total"
+                android:layout_alignTop="@+id/total" android:layout_toRightOf="@+id/total"
+                android:layout_toEndOf="@+id/total"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="@color/background_material_dark"
+                android:text=""
+                android:id="@+id/days"
+                android:layout_alignTop="@+id/daysTextView" android:layout_toLeftOf="@+id/daysTextView"
+                android:layout_toStartOf="@+id/daysTextView"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="@color/background_material_dark"
                 android:text="Loading..."
-                android:id="@+id/rightView"
+                android:id="@+id/daysTextView"
                 android:layout_margin="7dp"
+                android:layout_marginLeft="0dp"
                 android:layout_below="@+id/commitsView" android:layout_alignRight="@+id/commitsView"
                 android:layout_alignEnd="@+id/commitsView"/>
     </RelativeLayout>

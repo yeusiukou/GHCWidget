@@ -99,14 +99,12 @@ public class Widget extends AppWidgetProvider {
             adjustMonthsNum(context, columns, rows);
             resized = false;
         }
+        if (rows == 1)
+            return new RemoteViews(context.getPackageName(), R.layout.one_row);
         if (columns > 2) {
-            // Get 4 column widget remote view and return
-            return new RemoteViews(context.getPackageName(),
-                    R.layout.main);
+            return new RemoteViews(context.getPackageName(), R.layout.main);
         } else {
-            // Get appropriate remote view.
-            return new RemoteViews(context.getPackageName(),
-                    R.layout.small);
+            return new RemoteViews(context.getPackageName(), R.layout.small);
         }
     }
 
@@ -193,11 +191,12 @@ public class Widget extends AppWidgetProvider {
     }
 
     private void updateInfoBar(CommitsBase base){
-        remoteViews.setTextViewText(R.id.leftView, base.commitsNumber() + " total");
+        remoteViews.setTextViewText(R.id.total, String.valueOf(base.commitsNumber()));
         int streak = base.currentStreak();
+        remoteViews.setTextViewText(R.id.days, String.valueOf(streak));
         if(streak == 1){
-            remoteViews.setTextViewText(R.id.rightView, streak+" day");
-        } else remoteViews.setTextViewText(R.id.rightView, streak+" days");
+            remoteViews.setTextViewText(R.id.daysTextView, "day");
+        } else remoteViews.setTextViewText(R.id.daysTextView, "days");
     }
 
     // Load data from GitHub and generate a bitmap with commits.
@@ -342,25 +341,35 @@ public class Widget extends AppWidgetProvider {
                     break;
                 case 4: editor.putString("months", "5");
                     break;
-                default: editor.putString("months", "5");
+                case 5: editor.putString("months", "5");
+                    break;
+                case 6: editor.putString("months", "7");
+                    break;
+                case 8: editor.putString("months", "9");
+                    break;
+                default: editor.putString("months", "12");
             }
         } else {
             switch (numColumns){
-                case 2: editor.putString("months", "4");
+                case 2: editor.putString("months", "2");
                     break;
-                case 3: editor.putString("months", "6");
+                case 3: editor.putString("months", "5");
                     break;
-                case 4: editor.putString("months", "8");
+                case 4: editor.putString("months", "6");
                     break;
-                default: editor.putString("months", "8");
+                case 5: editor.putString("months", "7");
+                    break;
+                case 6: editor.putString("months", "11");
+                    break;
+                default: editor.putString("months", "12");
             }
         }
         editor.commit();
     }
 
     private void printMessage(String msg){
-        remoteViews.setTextViewText(R.id.leftView, "");
-        remoteViews.setTextViewText(R.id.rightView, msg);
+        remoteViews.setTextViewText(R.id.total, "");
+        remoteViews.setTextViewText(R.id.days, msg);
     }
 
     public void setStatus(int status){

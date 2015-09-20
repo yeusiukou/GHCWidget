@@ -36,13 +36,23 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:id="@+id/leftView"
-                android:text="86 total"
+                android:id="@+id/total"
+                android:text="86"
                 android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
                 android:layout_below="@+id/commitsView"
                 android:layout_toRightOf="@+id/octocatView" android:layout_toEndOf="@+id/octocatView"
                 android:textSize="16dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="@color/background_material_dark"
+                android:text=" total"
+                android:textSize="16dp"
+                android:layout_alignTop="@+id/total" android:layout_toRightOf="@+id/total"
+                android:layout_toEndOf="@+id/total"/>
 
         <TextView
                 android:layout_width="wrap_content"
@@ -51,11 +61,25 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
-                android:text="Loading..."
-                android:id="@+id/rightView"
+                android:text=""
+                android:id="@+id/days"
                 android:textSize="13dp"
-                android:layout_below="@+id/leftView" android:layout_alignLeft="@+id/leftView"
-                android:layout_alignStart="@+id/leftView"/>
+                android:layout_below="@+id/total" android:layout_alignLeft="@+id/total"
+                android:layout_alignStart="@+id/total"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:fontFamily="sans-serif-thin"
+                android:textColor="@color/background_material_dark"
+                android:text="Loading..."
+                android:textSize="13dp"
+                android:layout_marginLeft="4dp"
+                android:id="@+id/daysTextView"
+                android:layout_below="@+id/total" android:layout_toRightOf="@+id/days"
+                android:layout_toEndOf="@+id/days"/>
+
     </RelativeLayout>
 
 </FrameLayout>
