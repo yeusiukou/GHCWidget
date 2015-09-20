@@ -25,6 +25,7 @@
                 android:layout_height="35dp"
                 android:id="@+id/octocatView"
                 android:background="@drawable/octocat"
+                android:alpha="0.8"
                 android:layout_marginLeft="7dp"
                 android:layout_below="@+id/commitsView" android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"/>
