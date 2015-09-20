@@ -8,26 +8,28 @@ import org.xmlpull.v1.XmlPullParser;
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import android.os.AsyncTask;
 import android.util.Log;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 
-public class GitHubAPITask extends AsyncTask<String, Integer, CommitsBase> // Username to the input, Progress, Output
+public class GitHubAPITask extends AsyncTask<String, Integer, String> // Username to the input, Progress, Output
 {
 
     private static final String debugTag = "GHCWiget";
     private Widget widget;
+    private static CommitsBase base = null;
 
-    public GitHubAPITask(Widget widget){
+    public GitHubAPITask(Widget widget) {
         this.widget = widget;
     }
 
 
     // Call the downloading method in background and load data
     @Override
-    protected CommitsBase doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         String result = null;
         try {
             Log.d(debugTag, "Background:" + Thread.currentThread().getName());
@@ -38,67 +40,74 @@ public class GitHubAPITask extends AsyncTask<String, Integer, CommitsBase> // Us
             widget.setStatus(Widget.STATUS_OFFLINE);
             return null;
         }
-        if(result.equals("invalid_response")){
+        if (result.equals("invalid_response")) {
             widget.setStatus(Widget.STATUS_NOTFOUND);
             return null;
         }
 
-        CommitsBase base = parseResult(result);
-        return base;
+        return result;
     }
 
+    public static CommitsBase parseResult(final String result) throws ExecutionException, InterruptedException {
 
-    private CommitsBase parseResult(String result) {
+        AsyncTask<Void, Void, CommitsBase> task =  new AsyncTask<Void, Void, CommitsBase>(){
 
-        CommitsBase base = new CommitsBase();
-        try {
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            XmlPullParser xpp = factory.newPullParser();
+            @Override
+            protected CommitsBase doInBackground(Void... params) {
 
-            xpp.setInput(new StringReader(result));
-            int eventType = xpp.getEventType();
+                CommitsBase base = new CommitsBase();
+                try {
+                    XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                    factory.setNamespaceAware(true);
+                    XmlPullParser xpp = factory.newPullParser();
 
-            boolean firstTagSkipped = false;
-            SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    xpp.setInput(new StringReader(result));
+                    int eventType = xpp.getEventType();
 
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                switch (eventType) {
-                    case XmlPullParser.START_DOCUMENT: {
-                        break;
-                    }
-                    case XmlPullParser.START_TAG: {
-                        if (xpp.getName().equals("g")) {
-                            if (!firstTagSkipped) {
-                                firstTagSkipped = true;
-                                eventType = xpp.next();
-                                break;
-                            } else {
-                                base.newWeek();
-                                eventType = xpp.next();
+                    boolean firstTagSkipped = false;
+                    SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                    while (eventType != XmlPullParser.END_DOCUMENT) {
+                        switch (eventType) {
+                            case XmlPullParser.START_DOCUMENT: {
                                 break;
                             }
+                            case XmlPullParser.START_TAG: {
+                                if (xpp.getName().equals("g")) {
+                                    if (!firstTagSkipped) {
+                                        firstTagSkipped = true;
+                                        eventType = xpp.next();
+                                        break;
+                                    } else {
+                                        base.newWeek();
+                                        eventType = xpp.next();
+                                        break;
+                                    }
 
+                                }
+                                if (xpp.getName().equals("rect")) {
+                                    Date date = textFormat.parse(xpp.getAttributeValue(null, "data-date"));
+                                    int commits = Integer.valueOf(xpp.getAttributeValue(null, "data-count"));
+                                    String color = xpp.getAttributeValue(null, "fill");
+                                    Day day = new Day(date, commits, color);
+                                    base.addDay(day);
+                                    eventType = xpp.next();
+                                    break;
+                                }
+                            }
                         }
-                        if (xpp.getName().equals("rect")) {
-                            Date date = textFormat.parse(xpp.getAttributeValue(null, "data-date"));
-                            int commits = Integer.valueOf(xpp.getAttributeValue(null, "data-count"));
-                            String color = xpp.getAttributeValue(null, "fill");
-                            Day day = new Day(date, commits, color);
-                            base.addDay(day);
-                            eventType = xpp.next();
-                            break;
-                        }
+
+                        eventType = xpp.next();
                     }
+
+                } catch (Exception e) {
+                    Log.d(debugTag, "Error in parsing");
+                    e.printStackTrace();
                 }
-
-                eventType = xpp.next();
+                return base;
             }
+        };
 
-        } catch (Exception e) {
-            Log.d(debugTag, "Error in parsing");
-            e.printStackTrace();
-        }
-        return base;
+        return task.execute().get();
     }
 }

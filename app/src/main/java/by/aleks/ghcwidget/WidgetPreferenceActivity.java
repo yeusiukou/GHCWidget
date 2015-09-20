@@ -76,7 +76,8 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
                     setResult(RESULT_OK, result);
 
                     //Update the widget.
-                    UpdateWidget();
+                    if(!preference.getTitle().equals("username"))
+                        UpdateWidget(false);
 
                     finish();
                 }
@@ -99,11 +100,11 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
     /**
      * Send an intent to update the widget.
      */
-    private void UpdateWidget() {
-        Intent updateWidget = new Intent(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+    private void UpdateWidget(boolean online) {
+        Intent updateIntent = new Intent(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE,
                 Uri.EMPTY, this, Widget.class);
-
-        sendBroadcast(updateWidget);
+        updateIntent.putExtra(Widget.LOAD_DATA_KEY, online);
+        sendBroadcast(updateIntent);
     }
 
     private boolean isUsernameValid(String value){

@@ -33,6 +33,8 @@ public class Widget extends AppWidgetProvider {
     private int status = STATUS_ONLINE;
     private int[] appWidgetIds;
     private boolean resized = false;
+    private boolean online;
+    public static final String LOAD_DATA_KEY = "load_data";
 
     //Parameters
     private String username;
@@ -58,6 +60,7 @@ public class Widget extends AppWidgetProvider {
             if (action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE) ||
                     action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
 
+                online = intent.getBooleanExtra(LOAD_DATA_KEY, true);
                 AppWidgetManager appWM = AppWidgetManager.getInstance(context);
                 if(this.appWidgetIds==null)
                     this.appWidgetIds = appWM.getAppWidgetIds(intent.getComponent());
@@ -199,7 +202,7 @@ public class Widget extends AppWidgetProvider {
 
     // Load data from GitHub and generate a bitmap with commits.
     private Bitmap processImage(Context context){
-        CommitsBase refreshedBase = loadData(username);
+        CommitsBase refreshedBase = loadData(context, username);
 
         if (refreshedBase != null){
             base = refreshedBase;
@@ -213,13 +216,24 @@ public class Widget extends AppWidgetProvider {
 
 
     //Load data from the api using AsyncTask.
-    private CommitsBase loadData(String username){
+    private CommitsBase loadData(Context context, String username){
+        String prefDataKey = "offline_data";
         GitHubAPITask task = new GitHubAPITask(this);
 
         try {
             status = STATUS_ONLINE;
-            CommitsBase refreshedBase = task.execute(username).get();
-            return refreshedBase;
+            String data;
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences.Editor editor = prefs.edit();
+            // If the widget have to be updated online, load data and save it to SharedPreferences
+            if(online || !prefs.contains(prefDataKey)){
+                data = task.execute(username).get();
+                if(data!=null){
+                    editor.putString(prefDataKey, data);
+                    editor.commit();
+                }
+            } else data = prefs.getString(prefDataKey, null);
+            return GitHubAPITask.parseResult(data);
         }
         catch (Exception e)
         {
