@@ -24,6 +24,9 @@ public class Day {
     }
 
     private int setLevel(String color){
+
+        // normal color scheme
+
         if(color.equals("#eeeeee"))
             return 0;
         if(color.equals("#d6e685"))
@@ -34,6 +37,20 @@ public class Day {
             return 3;
         if(color.equals("#1e6823"))
             return 4;
+
+        // spooky color scheme (only on halloween)
+
+        if(color.equals("#eeeeee"))
+            return 0;
+        if(color.equals("#ffee4a"))
+            return 1;
+        if(color.equals("#ffc501"))
+            return 2;
+        if(color.equals("#fe9600"))
+            return 3;
+        if(color.equals("#03001c"))
+            return 4;
+
         throw new IllegalArgumentException("Can't find the color!");
     }
 
