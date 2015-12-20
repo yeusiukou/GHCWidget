@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">GHCWidget</string>
+    <string name="login_to_github">Log in to GitHub</string>
+
+    <string name="login_url">https://github.com/login</string>
+    <string name="domain">github.com</string>
 
     <string name="username_pref_title">Username</string>
     <string name="username_pref_summary">Set your GitHub username</string>

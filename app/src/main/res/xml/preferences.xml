@@ -24,4 +24,12 @@
             android:title="Show days of week"
             android:defaultValue="true"/>
 
+    <Preference
+            android:key="login"
+            android:title="Log in (to see private contributions)"/>
+
+    <Preference
+            android:key="logout"
+            android:title="Log out"/>
+
 </PreferenceScreen>

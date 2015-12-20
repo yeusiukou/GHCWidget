@@ -5,25 +5,24 @@ package by.aleks.ghcwidget;
  */
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
-import android.preference.PreferenceManager;
+import android.preference.PreferenceScreen;
 import android.util.Log;
-import android.util.Patterns;
-import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.Toast;
 import by.aleks.ghcwidget.data.ColorTheme;
-
-import java.util.Set;
 
 public class WidgetPreferenceActivity extends PreferenceActivity {
     private static final String TAG = "GHCW";
     private static final String CONFIGURE_ACTION = "android.appwidget.action.APPWIDGET_CONFIGURE";
+    private Preference loginPref, logoutPref;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -42,6 +41,74 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         findPreference("months").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("start_on_monday").setOnPreferenceChangeListener(onPreferenceChange);
         findPreference("days_labels").setOnPreferenceChangeListener(onPreferenceChange);
+
+
+        loginPref = findPreference("login");
+        loginPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                Intent loginIntent = new Intent().setClassName(WidgetPreferenceActivity.this, "by.aleks.ghcwidget.LoginActivity");
+                startActivity(loginIntent);
+                return true;
+            }
+        });
+
+        logoutPref = findPreference("logout");
+        logoutPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                clearCookies();
+                displayLoginButton();
+                updateWidget(true);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayLoginButton();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // On successful login update widget
+        if (resultCode == RESULT_OK)
+            updateWidget(true);
+    }
+
+    protected void displayLoginButton(){
+        String cookies = CookieManager.getInstance().getCookie(getString(R.string.login_url));
+        PreferenceScreen screen = getPreferenceScreen();
+        if(cookies != null){
+            screen.removePreference(loginPref);
+            screen.addPreference(logoutPref);
+        } else {
+            screen.addPreference(loginPref);
+            screen.removePreference(logoutPref);
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void clearCookies()
+    {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Using ClearCookies code for API >= Lollipop
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else
+        {
+            // Using ClearCookies code for API < Lollipop
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(this);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
     }
 
     /**
@@ -76,7 +143,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
                     setResult(RESULT_OK, result);
                     Log.d(TAG, preference.getTitle().toString());
                     //Update the widget.
-                    UpdateWidget(preference.getKey().equals("username"));
+                    updateWidget(preference.getKey().equals("username"));
 
                     finish();
                 }
@@ -99,7 +166,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
     /**
      * Send an intent to update the widget.
      */
-    private void UpdateWidget(boolean online) {
+    private void updateWidget(boolean online) {
         Intent updateIntent = new Intent(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE,
                 Uri.EMPTY, this, Widget.class);
         updateIntent.putExtra(Widget.LOAD_DATA_KEY, online);

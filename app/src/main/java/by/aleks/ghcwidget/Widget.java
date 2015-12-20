@@ -223,7 +223,7 @@ public class Widget extends AppWidgetProvider {
     //Load data from the api using AsyncTask.
     private CommitsBase loadData(Context context, String username){
         String prefDataKey = "offline_data";
-        GitHubAPITask task = new GitHubAPITask(this);
+        GitHubAPITask task = new GitHubAPITask(this, context);
 
         try {
             status = STATUS_ONLINE;

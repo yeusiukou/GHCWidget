@@ -1,16 +1,30 @@
 package by.aleks.ghcwidget.api;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.net.CookieStore;
+import java.util.HashSet;
+import java.util.Set;
 
+import android.webkit.CookieManager;
+import by.aleks.ghcwidget.R;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.ClientContext;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.protocol.BasicHttpContext;
+import org.apache.http.protocol.HttpContext;
 
 
 public class GitHubHelper {
@@ -38,7 +52,7 @@ public class GitHubHelper {
      * @return Array of html strings returned by the API.
      * @throws ApiException
      */
-    protected static synchronized String downloadFromServer(String username)
+    protected static synchronized String downloadFromServer(String username, Context context)
             throws ApiException {
         String retval = null;
         String url = "https://github.com/users/" + username + "/contributions";
@@ -46,8 +60,20 @@ public class GitHubHelper {
         Log.d(logTag, "Fetching " + url);
 
         // create an http client and a request object.
-        HttpClient client = new DefaultHttpClient();
+        DefaultHttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet(url);
+
+        // load and attach cookies
+        String cookies = CookieManager.getInstance().getCookie(context.getString(R.string.login_url));
+        if(cookies != null){
+            BasicCookieStore lCS = getCookieStore(cookies, context.getString(R.string.domain));
+
+            HttpContext localContext = new BasicHttpContext();
+            client.setCookieStore(lCS);
+            localContext.setAttribute(ClientContext.COOKIE_STORE, lCS);
+
+        }
+
 
         try {
 
@@ -76,5 +102,25 @@ public class GitHubHelper {
         }
 
         return retval;
+    }
+
+    // parse cookie string
+    private static BasicCookieStore getCookieStore(String cookies, String domain) {
+        String[] cookieValues = cookies.split(";");
+        BasicCookieStore cs = new BasicCookieStore();
+
+        BasicClientCookie cookie;
+        for (int i = 0; i < cookieValues.length; i++) {
+            String[] split = cookieValues[i].split("=");
+            if (split.length == 2)
+                cookie = new BasicClientCookie(split[0], split[1]);
+            else
+                cookie = new BasicClientCookie(split[0], null);
+
+            cookie.setDomain(domain);
+            cs.addCookie(cookie);
+        }
+        return cs;
+
     }
 }

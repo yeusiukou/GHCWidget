@@ -1,5 +1,6 @@
 package by.aleks.ghcwidget.api;
 
+import android.content.Context;
 import by.aleks.ghcwidget.Widget;
 import by.aleks.ghcwidget.data.CommitsBase;
 import by.aleks.ghcwidget.data.Day;
@@ -20,10 +21,12 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
 
     private static final String debugTag = "GHCWiget";
     private Widget widget;
+    private Context context;
     private static CommitsBase base = null;
 
-    public GitHubAPITask(Widget widget) {
+    public GitHubAPITask(Widget widget, Context context) {
         this.widget = widget;
+        this.context = context;
     }
 
 
@@ -33,7 +36,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
         String result = null;
         try {
             Log.d(debugTag, "Background:" + Thread.currentThread().getName());
-            result = GitHubHelper.downloadFromServer(params[0]);
+            result = GitHubHelper.downloadFromServer(params[0], context);
         } catch (GitHubHelper.ApiException e) {
             Log.d(debugTag, "Loading failed");
             e.getMessage();
