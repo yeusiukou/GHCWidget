@@ -17,7 +17,7 @@ public class CommitsBase {
             days = new ArrayList<Day>();
 
         // Decline the current week in the case it was created because od a new year.
-        if (currentDay!=null && day.getYear() > currentDay.getYear()){
+        if (currentDay!=null && currentWeek > 0 && day.getYear() > currentDay.getYear()){
             if(weeks.get(currentWeek-1).size()<7){
                 weeks.remove(currentWeek);
                 currentWeek--;
