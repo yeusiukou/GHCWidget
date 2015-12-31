@@ -81,9 +81,11 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
     protected void displayLoginButton(){
         String cookies = CookieManager.getInstance().getCookie(getString(R.string.login_url));
         PreferenceScreen screen = getPreferenceScreen();
-        if(cookies != null){
+        // If there are logged in cookies, show the "logout" button, otherwise show "login" button
+        if(cookies != null && cookies.split(";")[0].equals("logged_in=yes")){
             screen.removePreference(loginPref);
             screen.addPreference(logoutPref);
+            updateWidget(true);
         } else {
             screen.addPreference(loginPref);
             screen.removePreference(logoutPref);
