@@ -3,6 +3,7 @@ package by.aleks.ghcwidget.data;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by Alex on 12/8/14.
@@ -67,9 +68,9 @@ public class Day {
     }
 
     public String getMonthName(){
-        return new SimpleDateFormat("MMM").format(calendar.getTime());
+        return new SimpleDateFormat("MMM", Locale.getDefault()).format(calendar.getTime());
     }
-    public int getYear(){ return Integer.parseInt(new SimpleDateFormat("yyyy").format(calendar.getTime())); }
+    public int getYear(){ return Integer.parseInt(new SimpleDateFormat("yyyy", Locale.getDefault()).format(calendar.getTime())); }
 
     public boolean isFirst(){
         //return firstDayInMonth;

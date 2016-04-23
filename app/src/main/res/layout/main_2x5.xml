@@ -31,13 +31,13 @@
 
 		<ImageView
 			android:id="@+id/octocatView"
-			android:layout_width="35dp"
-			android:layout_height="35dp"
+			android:layout_width="74dp"
+			android:layout_height="20dp"
 			android:adjustViewBounds="true"
 			android:alpha="0.8"
 			android:contentDescription="@string/github"
 			android:scaleType="fitCenter"
-			android:src="@drawable/github_icon"/>
+			android:src="@drawable/github"/>
 
 		<TextView
 			android:id="@+id/total"
@@ -63,7 +63,6 @@
 			android:id="@+id/days"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_marginLeft="7dp"
 			android:layout_weight="1"
 			android:fontFamily="sans-serif-thin"
 			android:gravity="end"

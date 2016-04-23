@@ -7,14 +7,14 @@ import java.util.ArrayList;
  */
 public class CommitsBase {
 
-    private ArrayList<Day> days = new ArrayList<>();
+    ArrayList<Day> days = new ArrayList<>();
     private ArrayList< ArrayList<Day> > weeks = new ArrayList<>();
     private int currentWeek = -1;
     private Day currentDay;
 
     public void addDay(Day day){
         if (days == null)
-            days = new ArrayList<Day>();
+            days = new ArrayList<>();
 
         // Decline the current week in the case it was created because od a new year.
         if (currentDay!=null && currentWeek > 0 && day.getYear() > currentDay.getYear()){
@@ -60,7 +60,7 @@ public class CommitsBase {
     }
 
     /** Returns a very first week in a month from the given range*/
-    public int getFirstWeekOfMonth(int weeksNum){
+    public int getFirstWeekOfMonth(){
         int firstWeekOfLast = -1;
         for(int i = weeks.size()-1; i > 0; i--){
             for(Day day : weeks.get(i)){

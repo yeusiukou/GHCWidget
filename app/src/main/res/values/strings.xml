@@ -22,4 +22,9 @@
     <string name="w">W</string>
     <string name="f">F</string>
     <string name="s">S</string>
+
+    <string name="loading">Loading&#8230;</string>
+	<string name="commits">Commits</string>
+	<string name="github">GitHub</string>
+	<string name="one_row_split">/</string>
 </resources>

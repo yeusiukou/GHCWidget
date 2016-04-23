@@ -33,7 +33,9 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
         ListPreference themePref = (ListPreference)findPreference("color_theme");
         themePref.setEntries(ColorTheme.getThemeNames());
         themePref.setEntryValues(ColorTheme.getThemeNames());
-        themePref.setDefaultValue(ColorTheme.BLUE);
+        if(themePref.getValue() == null){
+            themePref.setValue(ColorTheme.GITHUB);
+        }
 
         //Set up the Listener.
         findPreference("username").setOnPreferenceChangeListener(onPreferenceChange);
@@ -123,7 +125,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
             String key = preference.getKey();
 
             // Exit if the username is invalid
-            if(preference.getKey().equals("username")){
+            if(key.equals("username")){
                 if(!isUsernameValid((String)newValue)){
                     alert("Invalid username");
                     return false;
