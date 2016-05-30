@@ -14,6 +14,7 @@ public class ColorTheme {
     public static String GRAY      = "Gray";
     public static String RED       = "Red";
     public static String BLUE      = "Blue";
+    public static String PURPLE    = "Purple";
     public static String ORANGE    = "Orange";
     public static String HALLOWEEN = "Halloween";
 
@@ -23,6 +24,7 @@ public class ColorTheme {
     private String[] gray      = {"#eeeeee", "#bdbdbd", "#9e9e9e", "#616161", "#212121"};
     private String[] red       = {"#eeeeee", "#ff7171", "#ff0000", "#b70000", "#830000"};
     private String[] blue      = {"#eeeeee", "#6bcdff", "#00a1f3", "#0079b7", "#003958"};
+    private String[] purple    = {"#eeeeee", "#d2ace6", "#aa66cc", "#660099", "#4f2266"};
     private String[] orange    = {"#eeeeee", "#ffcc80", "#ffa726", "#fb8c00", "#e65100"};
     private String[] halloween = {"#eeeeee", "#ffee4a", "#ffc501", "#fe9600", "#03001c"};
 
@@ -35,6 +37,7 @@ public class ColorTheme {
         themeMap.put(ColorTheme.GRAY,      gray);
         themeMap.put(ColorTheme.RED,       red);
         themeMap.put(ColorTheme.BLUE,      blue);
+        themeMap.put(ColorTheme.PURPLE,    purple);
         themeMap.put(ColorTheme.ORANGE,    orange);
         themeMap.put(ColorTheme.HALLOWEEN, halloween);
     }
@@ -44,7 +47,7 @@ public class ColorTheme {
     }
 
     public static CharSequence[] getThemeNames(){
-        return new CharSequence[]{ColorTheme.GITHUB, ColorTheme.MODERN, ColorTheme.GRAY, ColorTheme.RED, ColorTheme.BLUE, ColorTheme.ORANGE, ColorTheme.HALLOWEEN};
+        return new CharSequence[]{ColorTheme.GITHUB, ColorTheme.MODERN, ColorTheme.GRAY, ColorTheme.RED, ColorTheme.BLUE, ColorTheme.PURPLE, ColorTheme.ORANGE, ColorTheme.HALLOWEEN};
     }
 
 }
