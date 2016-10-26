@@ -20,8 +20,8 @@
 
 		<ImageView
 			android:id="@+id/octocatView"
-			android:layout_width="55dp"
-			android:layout_height="15dp"
+			android:layout_width="37dp"
+			android:layout_height="10dp"
 			android:adjustViewBounds="true"
 			android:alpha="0.8"
 			android:contentDescription="@string/github"
@@ -41,7 +41,7 @@
 				android:fontFamily="sans-serif-thin"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:textColor="@color/text"
-				android:textSize="16sp"
+				android:textSize="13sp"
 				tools:text="86"/>
 
 			<TextView
@@ -53,7 +53,7 @@
 				android:text="@string/one_row_split"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:textColor="@color/text"
-				android:textSize="16sp"/>
+				android:textSize="13sp"/>
 
 			<TextView
 				android:id="@+id/days"
@@ -62,7 +62,7 @@
 				android:fontFamily="sans-serif-thin"
 				android:textAppearance="?android:attr/textAppearanceLarge"
 				android:textColor="@color/text"
-				android:textSize="16sp"
+				android:textSize="13sp"
 				tools:text="3"/>
 		</LinearLayout>
 	</LinearLayout>

@@ -18,7 +18,6 @@ public class ColorTheme {
     public static String ORANGE    = "Orange";
     public static String HALLOWEEN = "Halloween";
 
-
     private String[] standard  = {"#eeeeee", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
     private String[] modern    = {"#afaca8", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
     private String[] gray      = {"#eeeeee", "#bdbdbd", "#9e9e9e", "#616161", "#212121"};

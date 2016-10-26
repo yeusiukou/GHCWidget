@@ -1,25 +1,31 @@
 package by.aleks.ghcwidget;
 
         import android.app.PendingIntent;
-        import android.appwidget.AppWidgetManager;
-        import android.appwidget.AppWidgetProvider;
-        import android.content.ComponentName;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.graphics.*;
-        import android.os.Bundle;
-        import android.preference.PreferenceManager;
-        import android.util.Log;
-        import android.view.Display;
-        import android.view.WindowManager;
-        import android.widget.RemoteViews;
-        import by.aleks.ghcwidget.api.GitHubAPITask;
-        import by.aleks.ghcwidget.data.ColorTheme;
-        import by.aleks.ghcwidget.data.CommitsBase;
-        import by.aleks.ghcwidget.data.Day;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.RemoteViews;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
+
+import by.aleks.ghcwidget.api.GitHubAPITask;
+import by.aleks.ghcwidget.data.ColorTheme;
+import by.aleks.ghcwidget.data.CommitsBase;
+import by.aleks.ghcwidget.data.Day;
 
 public class Widget extends AppWidgetProvider {
 
@@ -86,9 +92,9 @@ public class Widget extends AppWidgetProvider {
     /**
      * Determine appropriate view based on width provided.
      *
-     * @param minWidth
-     * @param minHeight
-     * @return
+     * @param minWidth widget width
+     * @param minHeight widget height
+     * @return RemoteViews
      */
     private RemoteViews getRemoteViews(Context context, int minWidth,
                                        int minHeight) {
@@ -99,7 +105,11 @@ public class Widget extends AppWidgetProvider {
             adjustMonthsNum(context, columns, rows);
             resized = false;
         }
-        if (rows == 1)
+        if (rows == 1 && columns == 2) {
+            return new RemoteViews(context.getPackageName(), R.layout.one_row_1x2);
+        } else if (rows == 2 && columns == 5) {
+            return new RemoteViews(context.getPackageName(), R.layout.main_2x5);
+        } else if (rows == 1)
             return new RemoteViews(context.getPackageName(), R.layout.one_row);
         if (columns > 2) {
             return new RemoteViews(context.getPackageName(), R.layout.main);
@@ -198,7 +208,7 @@ public class Widget extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.totalTextView, context.getString(R.string.total));
         int streak = base.currentStreak();
         remoteViews.setTextViewText(R.id.days, String.valueOf(streak));
-        if(streak == 1){
+        if(streak <= 1){
             remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.day));
         } else remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.days));
     }
@@ -234,8 +244,7 @@ public class Widget extends AppWidgetProvider {
             if(online || !prefs.contains(prefDataKey)){
                 data = task.execute(username).get();
                 if(data!=null){
-                    editor.putString(prefDataKey, data);
-                    editor.commit();
+                    editor.putString(prefDataKey, data).apply();
                 }
             } else data = prefs.getString(prefDataKey, null);
             return GitHubAPITask.parseResult(data);
@@ -301,7 +310,7 @@ public class Widget extends AppWidgetProvider {
 
             ArrayList<ArrayList<Day>> weeks = base.getWeeks();
 
-            int firstWeek = base.getFirstWeekOfMonth(weeksNumber); //Number of the week above which there will be the first month name.
+            int firstWeek = base.getFirstWeekOfMonth(); //Number of the week above which there will be the first month name.
 
             for(int i = weeks.size() - weeksNumber; i<weeks.size(); i++){
 
@@ -370,7 +379,7 @@ public class Widget extends AppWidgetProvider {
                 default: editor.putString("months", "12");
             }
         }
-        editor.commit();
+        editor.apply();
     }
 
     private void printMessage(String msg){
