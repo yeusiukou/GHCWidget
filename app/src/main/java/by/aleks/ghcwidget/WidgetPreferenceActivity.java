@@ -3,6 +3,7 @@ package by.aleks.ghcwidget;
 /**
  * Created by Alex on 12/7/14.
  */
+
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.net.Uri;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.widget.Toast;
+
 import by.aleks.ghcwidget.data.ColorTheme;
 
 public class WidgetPreferenceActivity extends PreferenceActivity {
