@@ -204,9 +204,8 @@ public class Widget extends AppWidgetProvider {
         remoteViews.setTextViewText(R.id.totalTextView, context.getString(R.string.total));
         int streak = base.currentStreak();
         remoteViews.setTextViewText(R.id.days, String.valueOf(streak));
-        if(streak == 1){
-            remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.day));
-        } else remoteViews.setTextViewText(R.id.daysTextView, context.getString(R.string.days));
+        CharSequence dayNoun = context.getResources().getQuantityText(R.plurals.days, streak);
+        remoteViews.setTextViewText(R.id.daysTextView, dayNoun);
     }
 
     // Load data from GitHub and generate a bitmap with commits.
