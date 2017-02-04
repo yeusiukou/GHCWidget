@@ -32,14 +32,14 @@ public class ColorTheme {
 
     public ColorTheme(){
         themeMap = new HashMap<>();
-        themeMap.put(ColorTheme.GITHUB,    standard);
-        themeMap.put(ColorTheme.MODERN,    modern);
-        themeMap.put(ColorTheme.GRAY,      gray);
-        themeMap.put(ColorTheme.RED,       red);
-        themeMap.put(ColorTheme.BLUE,      blue);
-        themeMap.put(ColorTheme.PURPLE,    purple);
-        themeMap.put(ColorTheme.ORANGE,    orange);
-        themeMap.put(ColorTheme.HALLOWEEN, halloween);
+        themeMap.put(GITHUB,    standard);
+        themeMap.put(MODERN,    modern);
+        themeMap.put(GRAY,      gray);
+        themeMap.put(RED,       red);
+        themeMap.put(BLUE,      blue);
+        themeMap.put(PURPLE,    purple);
+        themeMap.put(ORANGE,    orange);
+        themeMap.put(HALLOWEEN, halloween);
     }
 
     public int getColor(String themeName, int level){
@@ -47,7 +47,7 @@ public class ColorTheme {
     }
 
     public static CharSequence[] getThemeNames(){
-        return new CharSequence[]{ColorTheme.GITHUB, ColorTheme.MODERN, ColorTheme.GRAY, ColorTheme.RED, ColorTheme.BLUE, ColorTheme.PURPLE, ColorTheme.ORANGE, ColorTheme.HALLOWEEN};
+        return new CharSequence[]{GITHUB, MODERN, GRAY, RED, BLUE, PURPLE, ORANGE, HALLOWEEN};
     }
 
 }

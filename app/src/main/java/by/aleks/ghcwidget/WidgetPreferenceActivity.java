@@ -121,9 +121,6 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
     private OnPreferenceChangeListener onPreferenceChange = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(Preference preference, Object newValue) {
-
-            String key = preference.getKey();
-
             // Exit if the username is invalid
             if(preference.getKey().equals("username")){
                 if(!isUsernameValid((String)newValue)){
@@ -171,7 +168,7 @@ public class WidgetPreferenceActivity extends PreferenceActivity {
      * Send an intent to update the widget.
      */
     private void updateWidget(boolean online) {
-        Intent updateIntent = new Intent(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE,
+        Intent updateIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE,
                 Uri.EMPTY, this, Widget.class);
         updateIntent.putExtra(Widget.LOAD_DATA_KEY, online);
         sendBroadcast(updateIntent);

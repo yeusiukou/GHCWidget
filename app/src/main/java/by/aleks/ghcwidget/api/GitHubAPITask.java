@@ -22,7 +22,6 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
     private static final String debugTag = "GHCWiget";
     private Widget widget;
     private Context context;
-    private static CommitsBase base = null;
 
     public GitHubAPITask(Widget widget, Context context) {
         this.widget = widget;
@@ -33,7 +32,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
     // Call the downloading method in background and load data
     @Override
     protected String doInBackground(String... params) {
-        String result = null;
+        String result;
         try {
             Log.d(debugTag, "Background:" + Thread.currentThread().getName());
             result = GitHubHelper.downloadFromServer(params[0], context);
@@ -72,18 +71,17 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
 
                     while (eventType != XmlPullParser.END_DOCUMENT) {
                         switch (eventType) {
-                            case XmlPullParser.START_DOCUMENT: {
+                            case XmlPullParser.START_DOCUMENT:
                                 break;
-                            }
-                            case XmlPullParser.START_TAG: {
+                            case XmlPullParser.START_TAG:
                                 if (xpp.getName().equals("g")) {
                                     if (!firstTagSkipped) {
                                         firstTagSkipped = true;
-                                        eventType = xpp.next();
+                                        xpp.next();
                                         break;
                                     } else {
                                         base.newWeek();
-                                        eventType = xpp.next();
+                                        xpp.next();
                                         break;
                                     }
 
@@ -94,10 +92,9 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                                     String color = xpp.getAttributeValue(null, "fill");
                                     Day day = new Day(date, commits, color);
                                     base.addDay(day);
-                                    eventType = xpp.next();
+                                    xpp.next();
                                     break;
                                 }
-                            }
                         }
 
                         eventType = xpp.next();

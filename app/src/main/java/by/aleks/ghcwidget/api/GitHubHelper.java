@@ -27,11 +27,6 @@ public class GitHubHelper {
     private static final String logTag = "GHCWidget";
 
     public static class ApiException extends Exception {
-        private static final long serialVersionUID = 1L;
-
-        public ApiException(String msg) {
-            super(msg);
-        }
 
         public ApiException(String msg, Throwable thr) {
             super(msg, thr);
@@ -47,7 +42,7 @@ public class GitHubHelper {
      */
     protected static synchronized String downloadFromServer(String username, Context context)
             throws ApiException {
-        String retval = null;
+        String retval;
         String url = "https://github.com/users/" + username + "/contributions";
 
         Log.d(logTag, "Fetching " + url);
@@ -83,7 +78,7 @@ public class GitHubHelper {
             InputStream ist = entity.getContent();
             ByteArrayOutputStream content = new ByteArrayOutputStream();
 
-            int readCount = 0;
+            int readCount;
             while ((readCount = ist.read(buff)) != -1) {
                 content.write(buff, 0, readCount);
             }
