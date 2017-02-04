@@ -1,17 +1,11 @@
 package by.aleks.ghcwidget;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.ActionBarActivity;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class LoginActivity extends ActionBarActivity {
 

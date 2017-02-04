@@ -1,25 +1,31 @@
 package by.aleks.ghcwidget;
 
-        import android.app.PendingIntent;
-        import android.appwidget.AppWidgetManager;
-        import android.appwidget.AppWidgetProvider;
-        import android.content.ComponentName;
-        import android.content.Context;
-        import android.content.Intent;
-        import android.content.SharedPreferences;
-        import android.graphics.*;
-        import android.os.Bundle;
-        import android.preference.PreferenceManager;
-        import android.util.Log;
-        import android.view.Display;
-        import android.view.WindowManager;
-        import android.widget.RemoteViews;
-        import by.aleks.ghcwidget.api.GitHubAPITask;
-        import by.aleks.ghcwidget.data.ColorTheme;
-        import by.aleks.ghcwidget.data.CommitsBase;
-        import by.aleks.ghcwidget.data.Day;
+import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Display;
+import android.view.WindowManager;
+import android.widget.RemoteViews;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
+
+import by.aleks.ghcwidget.api.GitHubAPITask;
+import by.aleks.ghcwidget.data.ColorTheme;
+import by.aleks.ghcwidget.data.CommitsBase;
+import by.aleks.ghcwidget.data.Day;
 
 public class Widget extends AppWidgetProvider {
 

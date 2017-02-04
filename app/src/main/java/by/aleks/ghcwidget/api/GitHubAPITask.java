@@ -1,20 +1,20 @@
 package by.aleks.ghcwidget.api;
 
 import android.content.Context;
-import by.aleks.ghcwidget.Widget;
-import by.aleks.ghcwidget.data.CommitsBase;
-import by.aleks.ghcwidget.data.Day;
+import android.os.AsyncTask;
+import android.util.Log;
+
 import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.StringReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
-import android.os.AsyncTask;
-import android.util.Log;
-import org.xmlpull.v1.XmlPullParserFactory;
-
+import by.aleks.ghcwidget.Widget;
+import by.aleks.ghcwidget.data.CommitsBase;
+import by.aleks.ghcwidget.data.Day;
 
 public class GitHubAPITask extends AsyncTask<String, Integer, String> // Username to the input, Progress, Output
 {

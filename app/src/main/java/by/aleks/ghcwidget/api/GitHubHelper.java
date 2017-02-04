@@ -1,31 +1,24 @@
 package by.aleks.ghcwidget.api;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.CookieStore;
-import java.util.HashSet;
-import java.util.Set;
-
 import android.webkit.CookieManager;
-import by.aleks.ghcwidget.R;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.protocol.ClientContext;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+
+import by.aleks.ghcwidget.R;
 
 public class GitHubHelper {
 
