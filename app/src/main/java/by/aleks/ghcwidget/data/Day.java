@@ -27,15 +27,15 @@ public class Day {
 
         // normal color scheme
 
-        if(color.equals("#eeeeee"))
+        if(color.equals("#ebedf0"))
             return 0;
-        if(color.equals("#d6e685"))
+        if(color.equals("#c6e48b"))
             return 1;
-        if(color.equals("#8cc665"))
+        if(color.equals("#7bc96f"))
             return 2;
-        if(color.equals("#44a340"))
+        if(color.equals("#239a3b"))
             return 3;
-        if(color.equals("#1e6823"))
+        if(color.equals("#196127"))
             return 4;
 
         // spooky color scheme (only on halloween)
