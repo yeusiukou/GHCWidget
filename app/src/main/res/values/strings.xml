@@ -15,8 +15,10 @@
 
     <string name="loading_error">Loading failed</string>
     <string name="not_found">Username not found</string>
-    <string name="day">day</string>
-    <string name="days">days</string>
+    <plurals name="days">
+        <item quantity="one">day</item>
+        <item quantity="other">days</item>
+    </plurals>
     <string name="total">total</string>
     <string name="m">M</string>
     <string name="w">W</string>
