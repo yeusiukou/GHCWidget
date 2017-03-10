@@ -14,13 +14,13 @@ public class Day {
     private Calendar calendar = Calendar.getInstance();
 
     public Day(Date date, int commitsNumber, String color){
-        this.calendar.setTime(date);
+        calendar.setTime(date);
         this.commitsNumber = commitsNumber;
-        this.level = setLevel(color);
+        level = setLevel(color);
     }
 
     public String toString(){
-        return "Date:"+calendar.toString()+" Commits:"+commitsNumber+" Level:"+level;
+        return "Date:" + calendar + " Commits:" + commitsNumber + " Level:" + level;
     }
 
     private int setLevel(String color){
@@ -60,10 +60,6 @@ public class Day {
 
     public int getCommitsNumber() {
         return commitsNumber;
-    }
-
-    public void setCommitsNumber(int commitsNumber) {
-        this.commitsNumber = commitsNumber;
     }
 
     public String getMonthName(){

@@ -37,8 +37,7 @@ public class Widget extends AppWidgetProvider {
     private RemoteViews remoteViews;
     private CommitsBase base;
     private int status = STATUS_ONLINE;
-    private int[] appWidgetIds;
-    private boolean resized = false;
+    private boolean resized;
     private boolean online;
     private Context context;
     public static final String LOAD_DATA_KEY = "load_data";
@@ -53,8 +52,6 @@ public class Widget extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        if(this.appWidgetIds==null)
-            this.appWidgetIds = appWidgetIds;
         updateWidget(context);
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
@@ -64,13 +61,10 @@ public class Widget extends AppWidgetProvider {
         final String action = intent.getAction();
 
         if (action != null) {
-            if (action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE) ||
-                    action.equals(android.appwidget.AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
+            if (action.equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE) ||
+                    action.equals(AppWidgetManager.ACTION_APPWIDGET_ENABLED)) {
 
                 online = intent.getBooleanExtra(LOAD_DATA_KEY, true); //Set the flag of online/caching mode
-                AppWidgetManager appWM = AppWidgetManager.getInstance(context);
-                if(this.appWidgetIds==null)
-                    this.appWidgetIds = appWM.getAppWidgetIds(intent.getComponent());
 
                 updateWidget(context);
             }
@@ -307,7 +301,7 @@ public class Widget extends AppWidgetProvider {
 
             ArrayList<ArrayList<Day>> weeks = base.getWeeks();
 
-            int firstWeek = base.getFirstWeekOfMonth(weeksNumber); //Number of the week above which there will be the first month name.
+            int firstWeek = base.getFirstWeekOfMonth(); //Number of the week above which there will be the first month name.
 
             for(int i = weeks.size() - weeksNumber; i<weeks.size(); i++){
 
@@ -332,7 +326,6 @@ public class Widget extends AppWidgetProvider {
                         break;
                     }
                     canvas.drawRect(x, y, x+side, y+side, paint);
-                    y = y + side + space;
                 }
                 y = textSize+TEXT_GRAPH_SPACE;
                 x = x + side + space;
