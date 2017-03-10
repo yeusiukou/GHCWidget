@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "by.aleks.ghcwidget"
         minSdkVersion 16
         targetSdkVersion 21
-        versionCode 3
-        versionName "1.1"
+        versionCode 5
+        versionName "1.2.1"
     }
     buildTypes {
         release {
