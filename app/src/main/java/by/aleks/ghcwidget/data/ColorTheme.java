@@ -20,7 +20,6 @@ public class ColorTheme {
     public static String HALLOWEEN      = "Halloween";
     public static String PSYCHEDELIC    = "Psychedelic";
     public static String MOON           = "Moon";
-//Psychedelic
 
     private String[] standard       = {"#ebedf0", "#c6e48b", "#7bc96f", "#239a3b", "#196127"};
     private String[] modern         = {"#afaca8", "#d6e685", "#8cc665", "#44a340", "#1e6823"};
