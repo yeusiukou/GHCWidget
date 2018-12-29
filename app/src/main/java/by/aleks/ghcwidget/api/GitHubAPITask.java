@@ -6,8 +6,11 @@ import android.util.Log;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
+import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.IOException;
 import java.io.StringReader;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
@@ -53,7 +56,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
 
     public static CommitsBase parseResult(final String result) throws ExecutionException, InterruptedException {
 
-        AsyncTask<Void, Void, CommitsBase> task =  new AsyncTask<Void, Void, CommitsBase>(){
+        AsyncTask<Void, Void, CommitsBase> task = new AsyncTask<Void, Void, CommitsBase>(){
 
             @Override
             protected CommitsBase doInBackground(Void... params) {
@@ -86,7 +89,6 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                                         eventType = xpp.next();
                                         break;
                                     }
-
                                 }
                                 if (xpp.getName().equals("rect")) {
                                     Date date = textFormat.parse(xpp.getAttributeValue(null, "data-date"));
@@ -103,7 +105,9 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                         eventType = xpp.next();
                     }
 
-                } catch (Exception e) {
+                } catch (XmlPullParserException e) {
+                    // Ignore parsing exceptions as html may contain attributes without values (which is invalid in XML)
+                } catch (ParseException | IOException e) {
                     Log.d(debugTag, "Error in parsing");
                     e.printStackTrace();
                     return null;
