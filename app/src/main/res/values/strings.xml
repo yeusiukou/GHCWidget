@@ -12,6 +12,9 @@
     <string name="color_pref_title">Color theme</string>
     <string name="months_pref_title">Number of months to display</string>
     <string name="transparency_pref_title">Transparency</string>
+    <string name="start_week_pref_title">Start week on Monday</string>
+    <string name="show_days_pref_title">Show days of week</string>
+    <string name="refresh_pref_title">Manual refresh</string>
 
     <string name="loading_error">Loading failed</string>
     <string name="not_found">Username not found</string>

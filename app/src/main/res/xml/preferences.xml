@@ -18,18 +18,14 @@
             android:numeric="integer"/>
     <CheckBoxPreference
             android:key="start_on_monday"
-            android:title="Start week on Monday"/>
+            android:title="@string/start_week_pref_title"/>
     <CheckBoxPreference
             android:key="days_labels"
-            android:title="Show days of week"
+            android:title="@string/show_days_pref_title"
             android:defaultValue="true"/>
 
     <Preference
-            android:key="login"
-            android:title="Log in (to see private contributions)"/>
-
-    <Preference
-            android:key="logout"
-            android:title="Log out"/>
+            android:key="refresh"
+            android:title="@string/refresh_pref_title"/>
 
 </PreferenceScreen>
