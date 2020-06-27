@@ -13,48 +13,48 @@ public class Day {
     private int commitsNumber;
     private Calendar calendar = Calendar.getInstance();
 
-    public Day(Date date, int commitsNumber, String color){
+    public Day(Date date, int commitsNumber, String color) {
         this.calendar.setTime(date);
         this.commitsNumber = commitsNumber;
         this.level = setLevel(color);
     }
 
-    public String toString(){
-        return "Date:"+calendar.toString()+" Commits:"+commitsNumber+" Level:"+level;
+    public String toString() {
+        return "Date:" + calendar.toString() + " Commits:" + commitsNumber + " Level:" + level;
     }
 
-    private int setLevel(String color){
+    private int setLevel(String color) {
 
         // normal color scheme
 
-        if(color.equals("#ebedf0"))
+        if (color.equals("#ebedf0"))
             return 0;
-        if(color.equals("#c6e48b"))
+        if (color.equals("#9be9a8"))
             return 1;
-        if(color.equals("#7bc96f"))
+        if (color.equals("#40c463"))
             return 2;
-        if(color.equals("#239a3b"))
+        if (color.equals("#30a14e"))
             return 3;
-        if(color.equals("#196127"))
+        if (color.equals("#216e39"))
             return 4;
 
         // spooky color scheme (only on halloween)
 
-        if(color.equals("#eeeeee"))
+        if (color.equals("#eeeeee"))
             return 0;
-        if(color.equals("#ffee4a"))
+        if (color.equals("#ffee4a"))
             return 1;
-        if(color.equals("#ffc501"))
+        if (color.equals("#ffc501"))
             return 2;
-        if(color.equals("#fe9600"))
+        if (color.equals("#fe9600"))
             return 3;
-        if(color.equals("#03001c"))
+        if (color.equals("#03001c"))
             return 4;
 
         throw new IllegalArgumentException("Can't find the color!");
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
