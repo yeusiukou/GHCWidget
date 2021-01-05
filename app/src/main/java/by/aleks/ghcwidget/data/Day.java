@@ -51,6 +51,17 @@ public class Day {
         if (color.equals("#03001c"))
             return 4;
 
+        if (color.equals("var(--color-calendar-graph-day-bg)"))
+            return 0;
+        if (color.equals("var(--color-calendar-graph-day-L1-bg)"))
+            return 1;
+        if (color.equals("var(--color-calendar-graph-day-L2-bg)"))
+            return 2;
+        if (color.equals("var(--color-calendar-graph-day-L3-bg)"))
+            return 3;
+        if (color.equals("var(--color-calendar-graph-day-L4-bg)"))
+            return 4;
+
         throw new IllegalArgumentException("Can't find the color!");
     }
 
