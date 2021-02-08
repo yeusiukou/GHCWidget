@@ -71,7 +71,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                     int eventType = xpp.getEventType();
 
                     boolean firstTagSkipped = false;
-                    SimpleDateFormat textFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
                     while (eventType != XmlPullParser.END_DOCUMENT) {
                         switch (eventType) {
@@ -91,11 +91,14 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
                                     }
                                 }
                                 if (xpp.getName().equals("rect")) {
-                                    Date date = textFormat.parse(xpp.getAttributeValue(null, "data-date"));
-                                    int commits = Integer.valueOf(xpp.getAttributeValue(null, "data-count"));
-                                    String color = xpp.getAttributeValue(null, "fill");
-                                    Day day = new Day(date, commits, color);
-                                    base.addDay(day);
+                                    String dateStr = xpp.getAttributeValue(null, "data-date");
+                                    if (dateStr != null) {
+                                        Date date = dateFormat.parse(dateStr);
+                                        int commits = Integer.valueOf(xpp.getAttributeValue(null, "data-count"));
+                                        int level = Integer.valueOf(xpp.getAttributeValue(null, "data-level"));
+                                        Day day = new Day(date, commits, level);
+                                        base.addDay(day);
+                                    }
                                     eventType = xpp.next();
                                     break;
                                 }
