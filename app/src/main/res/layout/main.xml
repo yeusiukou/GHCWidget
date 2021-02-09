@@ -64,6 +64,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:fontFamily="sans-serif-thin"
                 android:textColor="@color/background_material_dark"
+                android:layout_marginRight="5dp"
                 android:layout_toLeftOf="@+id/daysTextView"/>
 
             <TextView

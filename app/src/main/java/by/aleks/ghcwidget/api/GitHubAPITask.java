@@ -41,8 +41,7 @@ public class GitHubAPITask extends AsyncTask<String, Integer, String> // Usernam
             Log.d(debugTag, "Background:" + Thread.currentThread().getName());
             result = GitHubHelper.downloadFromServer(params[0], context);
         } catch (GitHubHelper.ApiException e) {
-            Log.d(debugTag, "Loading failed");
-            e.getMessage();
+            Log.d(debugTag, "Loading failed >>> " + e.getMessage());
             widget.setStatus(Widget.STATUS_OFFLINE);
             return null;
         }
